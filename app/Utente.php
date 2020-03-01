@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * @property int $id
@@ -10,11 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $password
  * @property string $ruolo
  */
-class Utente extends Model
+class Utente extends Authenticatable
 {
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'utenti';

@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Utente;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -36,5 +39,47 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'nome_utente' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
+    protected function login(Request $request)
+    {
+        $default = '/';
+
+        $user = Utente::where('password', $request->password)
+            ->where('nome_utente', $request->nome_utente)
+            ->first();
+
+        if($user) {
+            Auth::login($user);
+            if(Auth::user()) {
+                return redirect()->route('dashboard');
+            }
+        } else {
+            return redirect()->back()->withInput();
+        }
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only( 'nome_utente', 'password');
+    }
+
+    public function authenticated(Request $request)
+    {
+        $credentials = $this->credentials($request);
+
+        if (Auth::attempt($credentials)) {
+            // Authentication passed...
+            return redirect()->intended('dashboard');
+        }
     }
 }
