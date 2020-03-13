@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('dashboard');
+Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
