@@ -22,10 +22,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
     Route::get('/creaconv', 'ConvocazioneController@create')->name('creaConv');
     Route::post('/addconv', 'ConvocazioneController@store')->name('addConv');
+
+    Route::get('/creadoc', 'DocumentoController@create')->name('creaDoc');
+    Route::post('/adddoc', 'DocumentoController@store')->name('addDoc');
+
+    //ROTTE dei TAGS
+
+    //ROTTE degli Ordini del Giorno
 });
-
-Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
-
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
