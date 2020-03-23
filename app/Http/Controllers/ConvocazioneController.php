@@ -3,17 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Convocazione;
 
 class ConvocazioneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $conv = DB::table('convocazioni')->get();
+
+        //dd(count($conv));
+
+        $Events = array
+        (
+            "0" => array
+            (
+                "title" => "Event One",
+                "start" => "2018-10-31",
+            ),
+            "1" => array
+            (
+                "title" => "Event Two",
+                "start" => "2018-11-01",
+            )
+        );
+        return view('dashboard',['Events' => $Events]);
+    }
+
+    public function listaConv(){
+        $conv = Convocazione::All();
+
+        return view('listaconv',['Convocazioni' => $conv]);
     }
 
     /**
@@ -23,7 +43,7 @@ class ConvocazioneController extends Controller
      */
     public function create()
     {
-        //
+        return view('creaconv');
     }
 
     /**

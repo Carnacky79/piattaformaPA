@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
+    Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
+    Route::get('/creaconv', 'ConvocazioneController@create')->name('creaConv');
+    Route::post('/addconv', 'ConvocazioneController@store')->name('addConv');
+});
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);

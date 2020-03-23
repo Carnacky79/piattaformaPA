@@ -64,7 +64,7 @@ class LoginController extends Controller
                 return redirect()->route('dashboard');
             }
         } else {
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->withErrors(['username' => 'Credenziali Errate']);
         }
     }
 

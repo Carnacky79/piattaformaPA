@@ -2,19 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c83dd3b-b7e2-4621-af40-1a68c641e834" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/progettoPA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/progettoPA.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.bootstrap4.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.bootstrap4.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.foundation.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.foundation.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.jqueryui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.jqueryui.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.semanticui.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/dataTables.semanticui.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/jquery.dataTables.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/css/jquery.dataTables.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/images/sort_asc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/images/sort_asc_disabled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/images/sort_both.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/images/sort_desc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/images/sort_desc_disabled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.bootstrap4.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.bootstrap4.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.foundation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.foundation.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.jqueryui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.jqueryui.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.semanticui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/dataTables.semanticui.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/jquery.dataTables.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/DataTables-1.10.20/js/jquery.dataTables.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/css/datatables.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/light-bootstrap/js/core/datatables.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/creaconv.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/listaconv.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Utente.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Utente.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ConvocazioneController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ConvocazioneController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbars/navs/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbars/navs/auth.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/navbars/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,7 +168,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="//192.168.1.13/Francesco/aderiamo.it" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -150,6 +178,14 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Apache24\htdocs\progettoPA\resources\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Apache24\htdocs\progettoPA\public\light-bootstrap\css" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -185,7 +221,15 @@
       <workItem from="1581621421092" duration="36000" />
       <workItem from="1581621492882" duration="578000" />
       <workItem from="1581622173239" duration="3220000" />
-      <workItem from="1582454699201" duration="13744000" />
+      <workItem from="1582454699201" duration="18267000" />
+      <workItem from="1583963187478" duration="27000" />
+      <workItem from="1584108177446" duration="67000" />
+      <workItem from="1584108249179" duration="2971000" />
+      <workItem from="1584184004326" duration="6861000" />
+      <workItem from="1584735151319" duration="3000" />
+      <workItem from="1584735198106" duration="13000" />
+      <workItem from="1584735258323" duration="8722000" />
+      <workItem from="1584964985930" duration="8071000" />
     </task>
     <servers />
   </component>
@@ -200,10 +244,10 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state x="755" y="316" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.2048.1122@0.0.2048.1122" timestamp="1583102432675" />
-    <state x="805" y="316" key="FileChooserDialogImpl" timestamp="1583100648040">
+    <state x="805" y="316" key="FileChooserDialogImpl" timestamp="1583963210439">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="805" y="316" key="FileChooserDialogImpl/0.0.2048.1122@0.0.2048.1122" timestamp="1583100648040" />
+    <state x="805" y="316" key="FileChooserDialogImpl/0.0.2048.1122@0.0.2048.1122" timestamp="1583963210439" />
     <state width="2005" height="309" key="GridCell.Tab.0.bottom" timestamp="1581622071613">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
@@ -220,13 +264,14 @@
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
     <state width="2005" height="309" key="GridCell.Tab.0.right/0.0.2048.1122@0.0.2048.1122" timestamp="1581622071613" />
-    <state x="721" y="387" key="com.intellij.ide.util.TipDialog" timestamp="1582454737570">
+    <state x="901" y="486" key="com.intellij.ide.util.TipDialog" timestamp="1584964997815">
+      <screen x="0" y="0" width="2560" height="1409" />
+    </state>
+    <state x="721" y="387" key="com.intellij.ide.util.TipDialog/0.0.2048.1122@0.0.2048.1122" timestamp="1584735259610" />
+    <state x="901" y="486" key="com.intellij.ide.util.TipDialog/3840.0.2048.1115/0.0.2560.1409@0.0.2560.1409" timestamp="1584964997815" />
+    <state x="719" y="159" width="702" height="804" key="find.popup" timestamp="1584808622227">
       <screen x="0" y="0" width="2048" height="1122" />
     </state>
-    <state x="721" y="387" key="com.intellij.ide.util.TipDialog/0.0.2048.1122@0.0.2048.1122" timestamp="1582454737570" />
-    <state x="719" y="159" width="611" height="804" key="find.popup" timestamp="1583097792007">
-      <screen x="0" y="0" width="2048" height="1122" />
-    </state>
-    <state x="719" y="159" width="611" height="804" key="find.popup/0.0.2048.1122@0.0.2048.1122" timestamp="1583097792007" />
+    <state x="719" y="159" width="702" height="804" key="find.popup/0.0.2048.1122@0.0.2048.1122" timestamp="1584808622227" />
   </component>
 </project>

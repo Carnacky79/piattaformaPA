@@ -13,17 +13,27 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
         <!-- CSS Files -->
         <link href="{{ asset('light-bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('light-bootstrap/css/datatables.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('light-bootstrap/css/light-bootstrap-dashboard.css?v=2.0.0') }} " rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="{{ asset('light-bootstrap/css/demo.css') }}" rel="stylesheet" />
-    </head>
+
+        <link href='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css' rel='stylesheet' />
+
+        <link href='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css' rel='stylesheet' />
+
+        <link href='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.css' rel='stylesheet' />
+
+
+
+            </head>
 
     <body>
         <div class="wrapper @if (!auth()->check() || request()->route()->getName() == "") wrapper-full-page @endif">
 
             @if (auth()->check() && request()->route()->getName() != "")
                 @include('layouts.navbars.sidebar')
-                @include('pages/sidebarstyle')
+                {{-- @include('pages/sidebarstyle') --}}
             @endif
 
             <div class="@if (auth()->check() && request()->route()->getName() != "") main-panel @endif">
@@ -38,7 +48,10 @@
 
     </body>
         <!--   Core JS Files   -->
-    <script src="{{ asset('light-bootstrap/js/core/jquery.3.2.1.min.js') }}" type="text/javascript"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
     <script src="{{ asset('light-bootstrap/js/core/popper.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('light-bootstrap/js/core/bootstrap.min.js') }}" type="text/javascript"></script>
 
@@ -53,61 +66,16 @@
     <script src="{{ asset('light-bootstrap/js/plugins/bootstrap-notify.js') }}"></script>
     <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
     <script src="{{ asset('light-bootstrap/js/light-bootstrap-dashboard.js?v=2.0.0') }}" type="text/javascript"></script>
-    <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-    <script src="{{ asset('light-bootstrap/js/demo.js') }}"></script>
+    <script src='https://unpkg.com/@fullcalendar/core@4.4.0/locales-all.js'></script>
+
+    <script src='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js'></script>
+
+    <script src='https://unpkg.com/@fullcalendar/interaction@4.4.0/main.min.js'></script>
+
+    <script src='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.js'></script>
+
+    <script src='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.js'></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/core/datatables.min.js') }}"></script>
     @stack('js')
-    <script>
-      $(document).ready(function () {
-
-        $('#facebook').sharrre({
-          share: {
-            facebook: true
-          },
-          enableHover: false,
-          enableTracking: false,
-          enableCounter: false,
-          click: function(api, options) {
-            api.simulateClick();
-            api.openPopup('facebook');
-          },
-          template: '<i class="fab fa-facebook-f"></i> Facebook',
-          url: 'https://light-bootstrap-dashboard-laravel.creative-tim.com/login'
-        });
-
-        $('#google').sharrre({
-          share: {
-            googlePlus: true
-          },
-          enableCounter: false,
-          enableHover: false,
-          enableTracking: true,
-          click: function(api, options) {
-            api.simulateClick();
-            api.openPopup('googlePlus');
-          },
-          template: '<i class="fab fa-google-plus"></i> Google',
-          url: 'https://light-bootstrap-dashboard-laravel.creative-tim.com/login'
-        });
-
-        $('#twitter').sharrre({
-          share: {
-            twitter: true
-          },
-          enableHover: false,
-          enableTracking: false,
-          enableCounter: false,
-          buttons: {
-            twitter: {
-              via: 'CreativeTim'
-            }
-          },
-          click: function(api, options) {
-            api.simulateClick();
-            api.openPopup('twitter');
-          },
-          template: '<i class="fab fa-twitter"></i> Twitter',
-          url: 'https://light-bootstrap-dashboard-laravel.creative-tim.com/login'
-        });
-      });
-    </script>
 </html>
