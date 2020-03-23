@@ -34,6 +34,7 @@ class ConvocazioneController extends Controller
         $conv = Convocazione::All();
 
         return view('listaconv',['Convocazioni' => $conv]);
+
     }
 
     /**
