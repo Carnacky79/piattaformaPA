@@ -12,12 +12,12 @@
                                 <h3 class="header text-center">{{ __('Aggiungi Convocazione') }}</h3>
                             </div>
                             <div class="card-body ">
-                                <div class="card-body">
+
                                     <div class="form-group">
-                                        <label for="nome_utente" class="col-md-6 col-form-label">{{ __('Titolo') }}</label>
+                                        <label for="titolo_convocazione" class="col-md-6 col-form-label">{{ __('Titolo') }}</label>
 
                                         <div class="col-md-14">
-                                            <input id="titolo_convocazione" type="text" class="form-control @error('titolo_convocazione') is-invalid @enderror" name="titolo_convocazione" value="{{ old('titolo_convocazione') }}" required autofocus>
+                                            <input placeholder="Titolo della convocazione" id="titolo_convocazione" type="text" class="form-control @error('titolo_convocazione') is-invalid @enderror" name="titolo_convocazione" value="{{ old('titolo_convocazione') }}" required autofocus>
 
                                             @error('titolo_convocazione')
                                             <span class="invalid-feedback" role="alert">
@@ -25,28 +25,62 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <label for="password" class="col-md-6 col-form-label">{{ __('Password') }}</label>
+                                        <div class="form-group mt-2">
+                                            <label for="desc_convocazione" class="col-md-6 col-form-label">{{ __('Descrizione') }}</label>
 
                                             <div class="col-md-14">
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password', 'secret') }}" required autocomplete="current-password">
-
-                                                @error('password')
+                                                <textarea placeholder="Descrizione della convocazione" style="height:6rem" rows="3" id="desc_convocazione" class="form-control @error('desc_convocazione') is-invalid @enderror" name="desc_convocazione"  required >
+                                                </textarea>
+                                                @error('desc_convocazione')
                                                 <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="form-group mt-2 col-6">
+                                                <label for="data_inizio" class="col-md-6 col-form-label">{{ __('Data inizio') }}</label>
+
+                                                <div class="col-md-12">
+                                                    <input id="data_inizio" type="datetime-local" class="form-control @error('data_inizio') is-invalid @enderror" name="data_inizio" value="{{ old('tdata_inizio') }}" required autofocus>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-2 col-6">
+                                                <label for="data_fine" class="col-md-6 col-form-label">{{ __('Data fine') }}</label>
+
+                                                <div class="col-md-12">
+                                                    <input id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}" required autofocus>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     </div>
-                                </div>
+
+                                    <div class="form-group mt-3" id="added">
+                                        <div class="col-12 text-left mt-5 mb-1">
+                                            <h5>Ordine del Giorno</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group mt-2 col-4">
+                                                <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
+                                                <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ old('titolo_ordine') }}"  autofocus>
+                                            </div>
+                                            <div class="form-group mt-2 col-5">
+                                                <label for="desc_ordine" class="d-inline col-md-6 col-form-label">{{ __('Descrizione') }}</label>
+                                                <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
+                                            </div>
+                                            <div class="form-group mt-2 col-3">
+                                                <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 <div class="card-footer ml-auto mr-auto">
-                                    <div class="container text-center" >
-                                        <button type="submit" class="btn btn-warning btn-wd">{{ __('Login') }}</button>
+                                    <div class="container text-center mx-auto" style="max-width: 100%" >
+                                        <button type="submit" class="btn btn-warning btn-wd">{{ __('Salva') }}</button>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -58,5 +92,27 @@
 @endsection
 
 @push('js')
+<script>
+    function addOrder(event){
+        event.preventDefault();
+        $("#aggiungiordine").remove();
+        const html =`
+        <div class="row">
+            <div class="form-group mt-2 col-4">
+                <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
+                <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ old('titolo_ordine') }}"  autofocus>
+            </div>
+            <div class="form-group mt-2 col-5">
+                <label for="desc_ordine" class="d-inline col-md-6 col-form-label">{{ __('Descrizione') }}</label>
+                <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
+            </div>
+            <div class="form-group mt-2 col-3">
+                <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+            </div>
+        </div>
+        `;
 
+         $("#added").append(html);
+    }
+</script>
 @endpush
