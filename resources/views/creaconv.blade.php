@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <form class="form" method="POST" action="{{ route('addConv') }}">
+                    <form class="form" method="POST" action="{{ route('addConv') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card card-login card-hidden">
                             <div class="card-header ">
@@ -74,7 +74,23 @@
                                                 <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="form-group mt-3" id="files">
+                                        <div class="col-12 text-left mt-5 mb-1">
+                                            <h5>Lista Documenti e Files</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group mt-2 col-6">
+                                                <label for="file" class="d-inline col-md-6 col-form-label">{{ __('Documento') }}</label>
+                                                <input style="width:60%" id="file" type="file" class="d-inline form-control " name="file[]" autofocus>
+                                            </div>
+                                            <div class="form-group mt-2 col-3">
 
+                                            </div>
+                                            <div class="form-group mt-2 col-3">
+                                                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 <div class="card-footer ml-auto mr-auto">
@@ -113,6 +129,42 @@
         `;
 
          $("#added").append(html);
+    }
+
+    function addDoc(event){
+        event.preventDefault();
+        $("#aggiungidocumento").parent('div').remove();
+        const html =`
+        <div class="row">
+            <div class="form-group mt-2 col-6">
+                <label for="file" class="d-inline col-md-6 col-form-label">{{ __('Documento') }}</label>
+                <input style="width:60%" id="file" type="file" class="d-inline form-control " name="file[]" autofocus>
+            </div>
+            <div class="form-group mt-2 col-3">
+                <button onclick="delDoc(event)" id="eliminadocumento" class="btn btn-danger btn-wd">{{ __('Elimina Documento') }}</button>
+            </div>
+            <div class="form-group mt-2 col-3">
+                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+            </div>
+        </div>
+        `;
+
+        $("#files").append(html);
+    }
+
+    function delDoc(event){
+        const button =`
+            <div class="form-group mt-2 col-3">
+                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+            </div>
+        `;
+
+        event.preventDefault();
+
+        if($(event.target).parent().siblings('div').has('button').length != 0) {
+            $(event.target).parent().parent().prev().append(button);
+        }
+        $(event.target).parent().parent().remove();
     }
 </script>
 @endpush
