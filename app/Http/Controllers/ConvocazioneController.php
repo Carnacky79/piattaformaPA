@@ -11,24 +11,9 @@ class ConvocazioneController extends Controller
 {
     public function index()
     {
-        $conv = DB::table('convocazioni')->get();
+        $items = Convocazione::All();
 
-        //dd(count($conv));
-
-        $Events = array
-        (
-            "0" => array
-            (
-                "title" => "Event One",
-                "start" => "2018-10-31",
-            ),
-            "1" => array
-            (
-                "title" => "Event Two",
-                "start" => "2018-11-01",
-            )
-        );
-        return view('dashboard',['Events' => $Events]);
+        return view('dashboard',['Events' => $items]);
     }
 
     public function listaConv(){
@@ -78,9 +63,13 @@ class ConvocazioneController extends Controller
 
         $conv->save();
 
-        foreach($data['titolo_ordine'] as $index => $titolo_ordine){
-            $conv->ordiniGiorno()->create(['titolo_og' => $titolo_ordine, 'descrizione_og' => $data['desc_ordine'][$index]]);
+        if($data['titolo_ordine'][0] != '') {
+            foreach ($data['titolo_ordine'] as $index => $titolo_ordine) {
+                $conv->ordiniGiorno()->create(['titolo_og' => $titolo_ordine, 'descrizione_og' => $data['desc_ordine'][$index]]);
+            }
         }
+
+
 
         //dd($request->input('titolo_convocazione'));
     }
@@ -93,7 +82,9 @@ class ConvocazioneController extends Controller
      */
     public function show($id)
     {
-        //
+        $conv = Convocazione::find($id);
+
+        return view('showconv',['titolo' => $conv->titolo]);
     }
 
     /**
@@ -127,6 +118,8 @@ class ConvocazioneController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $convocazione = Convocazione::find($id);
+        $convocazione->ordiniGiorno()->delete();
+        $convocazione->delete();
     }
 }

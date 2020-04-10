@@ -22,6 +22,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
     Route::get('/creaconv', 'ConvocazioneController@create')->name('creaConv');
     Route::post('/addconv', 'ConvocazioneController@store')->name('addConv');
+    Route::get('/listaconv/{conv}', 'ConvocazioneController@show')->name('showConv');
+    Route::get('/delconv/{conv}', 'ConvocazioneController@destroy')->name('delConv');
 
     Route::get('/creadoc', 'DocumentoController@create')->name('creaDoc');
     Route::post('/adddoc', 'DocumentoController@store')->name('addDoc');

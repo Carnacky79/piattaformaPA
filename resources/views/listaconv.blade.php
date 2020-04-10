@@ -49,58 +49,65 @@
 @endsection
 
 @push('js')
-    <script>
-    $(document).ready( function () {
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var convocazioni = {!!$Convocazioni!!}
 
-        function Employee ( name, position, salary, office ) {
-            this.name = name;
-            this.position = position;
-            this.salary = salary;
-            this._office = office;
-
-            this.office = function () {
-                return this._office;
-            }
-        };
 
     let table = $('#table_id').DataTable( {
-
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Italian.json"
         },
 
-    data: [
-        {
-            "id" : '1',
-            "titolo" : 'titolo di prova',
-            "descrizione" : 'descrizione di prova',
-            "datainizio" : "2012/03/29",
-            "datafine" : "2012/04/02",
-
-        }
-    ],
+    data: convocazioni,
 
     columns: [
 
     { data: 'id' },
     { data: 'titolo' },
     { data: 'descrizione' },
-    { data: 'datainizio' },
-    { data: 'datafine' },
+    { data: 'data_inizio' },
+    { data: 'data_fine' },
         {
             "targets": -1,
             "data": null,
-            "defaultContent": "<button class='btn btn-outline-primary'><i class='nc-icon nc-tap-01'></i></button>"
+            "defaultContent": "" +
+                "<button id='view' class='btn btn-primary btn-fill'><i class='nc-icon nc-zoom-split'></i></button>"
+                @if(Auth::user()->ruolo == 'amministratore')
+                +
+                "<button id='delete' class='ml-4 btn btn-danger btn-fill'><i class='nc-icon nc-simple-remove'></i></button>"
+                @endif
         },
     ],
 
     } );
 
-        $('#table_id tbody').on( 'click', 'button', function () {
+        $('#table_id tbody').on( 'click', 'button#view', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            alert( data['id'] +"'s salary is: "+ data[ 5 ] );
+            var url = '{{ route('showConv', ':id') }}';
+            url = url.replace(':id', data['id']);
+            window.location = url;
+        } );
+
+        $('#table_id tbody').on( 'click', 'button#delete', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            DeleteThis(data['id']);
+            table.row($(this).parents('tr')).remove().draw();
         } );
 
     } );
+
+    function DeleteThis( id )
+    {
+        var confirmmssg = confirm("Sicuro di voler eliminare la convocazione?");
+        var url = '{{ route('delConv', ':id') }}';
+        url = url.replace(':id', id);
+        if (confirmmssg ){
+            $.ajax({
+                type: "get",
+                url: url,
+            });
+        }
+    }
     </script>
 @endpush
