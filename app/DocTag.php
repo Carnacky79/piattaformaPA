@@ -13,24 +13,26 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DocTag extends Model
 {
+    public $timestamps = false;
+
     /**
      * @var array
      */
     protected $fillable = ['id_doc', 'id_tag'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function documenti()
     {
-        return $this->hasOne('App\Documenti', 'id', 'id_doc');
+        return $this->belongsTo('App\Documento', 'id', 'id_doc');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function tag()
     {
-        return $this->hasOne('App\Tag', 'id', 'id_tag');
+        return $this->belongsTo('App\Tag', 'id', 'id_tag');
     }
 }

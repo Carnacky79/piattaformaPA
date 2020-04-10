@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class Utente extends Authenticatable
 {
+    public $timestamps = false;
     /**
      * The table associated with the model.
      *

@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Documento extends Model
 {
+    public $timestamps = false;
+
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'documenti';
@@ -29,18 +31,18 @@ class Documento extends Model
     protected $fillable = ['nome_file', 'tipo_file', 'percorso_file', 'preferito', 'id_convocazione'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function docTag()
     {
-        return $this->belongsTo('App\DocTag', 'id', 'id_doc');
+        return $this->hasMany('App\DocTag', 'id_doc', 'id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function convocazioni()
     {
-        return $this->hasOne('App\Convocazioni', 'id', 'id_convocazione');
+        return $this->belongsTo('App\Convocazioni', 'id_convocazione', 'id');
     }
 }

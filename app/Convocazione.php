@@ -15,9 +15,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Convocazione extends Model
 {
+    public $timestamps = false;
+
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'convocazioni';
@@ -28,18 +30,18 @@ class Convocazione extends Model
     protected $fillable = ['titolo', 'descrizione', 'data_inizio', 'data_fine'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function documenti()
     {
-        return $this->belongsTo('App\Documenti', 'id', 'id_convocazione');
+        return $this->hasMany('App\Documento', 'id_convocazione', 'id');
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function ordiniGiorno()
     {
-        return $this->belongsTo('App\OrdiniGiorno', 'id', 'id_convocazione');
+        return $this->hasMany('App\Ordine', 'id_convocazione', 'id');
     }
 }

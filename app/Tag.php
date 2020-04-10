@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Tag extends Model
 {
+
+    public $timestamps = false;
     /**
      * @var array
      */
@@ -21,6 +23,6 @@ class Tag extends Model
      */
     public function docTag()
     {
-        return $this->belongsTo('App\DocTag', 'id', 'id_tag');
+        return $this->hasMany('App\DocTag', 'id_tag', 'id');
     }
 }

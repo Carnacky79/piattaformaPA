@@ -13,9 +13,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ordine extends Model
 {
+
+    public $timestamps = false;
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'ordini_giorno';
@@ -26,10 +28,10 @@ class Ordine extends Model
     protected $fillable = ['titolo_og', 'descrizione_og', 'id_convocazione'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function convocazioni()
     {
-        return $this->hasOne('App\Convocazioni', 'id', 'id_convocazione');
+        return $this->belongsTo('App\Convocazione', 'id_convocazione');
     }
 }
