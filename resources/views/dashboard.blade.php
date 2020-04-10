@@ -20,12 +20,11 @@
             var url = '{{ route('showConv', ':id') }}';
 
             events = events.map(function(val){
-                url = url.replace(':id', val.id);
                 return {
                     title: val.titolo,
                     start: val.data_inizio,
                     end: val.data_fine,
-                    url: url
+                    url: url.replace(':id', val.id)
                 }
             });
 

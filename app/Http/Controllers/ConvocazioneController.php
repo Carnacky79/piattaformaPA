@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Convocazione;
 
@@ -69,9 +70,30 @@ class ConvocazioneController extends Controller
             }
         }
 
+        if($request->hasFile('file')) {
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $files = $data['file'];
+            foreach ($files as $file) {
+                $random = rand(1,999);
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedfileExtension);
+                $exist = Storage::disk('local')->exists('documenti/'.$filename);
+
+                if ($check) {
+                    if($exist){
+                        $filename = substr($filename, 0, strpos($filename, '.'.$extension)).$random.'.'.$extension;
+                    }
+                    $filepath = $file->storeAs(
+                        'documenti', $filename
+                    );
+                    $conv->documenti()->create(['nome_file' => $filename, 'tipo_file' => $extension, 'percorso_file' => $filepath]);
+                }
+            }
+        }
 
 
-        //dd($request->input('titolo_convocazione'));
+        return $this->listaConv();
     }
 
     /**
@@ -84,7 +106,19 @@ class ConvocazioneController extends Controller
     {
         $conv = Convocazione::find($id);
 
-        return view('showconv',['titolo' => $conv->titolo]);
+        $format = 'Y-m-d\TH:i:s';
+        $data_inizio = date_create($conv->data_inizio);
+        $data_fine = date_create($conv->data_fine);
+        $odg = $conv->ordiniGiorno();
+
+        return view('showconv',[
+            'titolo' => $conv->titolo,
+            'descrizione' => $conv->descrizione,
+            'datainizio' => date_format($data_inizio, $format),
+            'datafine' => date_format($data_fine, $format),
+            'ordinidelgiorno' => $conv->ordiniGiorno()->get(),
+            'documenti' => $conv->documenti()->get(),
+        ]);
     }
 
     /**
