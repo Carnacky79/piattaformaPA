@@ -39,7 +39,7 @@ class ConvocazioneController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function store(Request $request)
     {
@@ -93,8 +93,7 @@ class ConvocazioneController extends Controller
             }
         }
 
-
-        return $this->listaConv();
+        return $this->listaConv()->with(['success' => 'Convocazione inserita correttamente']);
     }
 
     /**

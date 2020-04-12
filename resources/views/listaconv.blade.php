@@ -49,7 +49,20 @@
 @push('js')
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        var convocazioni = {!!$Convocazioni!!}
+        @isset($success)
+        $.notify({
+            icon: "glyphicon glyphicon-warning-sign",
+            message: "{{$success}}"
+        },{
+            type: 'success',
+            timer: 3000,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+        @endisset
+        var convocazioni = {!!$Convocazioni!!};
 
 
     let table = $('#table_id').DataTable( {
@@ -104,6 +117,20 @@
             $.ajax({
                 type: "get",
                 url: url,
+                success: function () {
+                    $.notify({
+                        icon: "glyphicon glyphicon-warning-sign",
+                        message: "Record eliminato correttamente"
+                    },{
+                        type: 'danger',
+                        timer: 3000,
+                        placement: {
+                            from: 'top',
+                            align: 'right'
+                        }
+                    });
+
+                },
             });
         }
     }

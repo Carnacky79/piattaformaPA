@@ -18,7 +18,7 @@ Auth::routes();
 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/download/{file}', 'DownloadsController@download');
+    Route::get('/download/{file}', 'DownloadsController@download')->name('download');
 
     Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
     Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
@@ -29,7 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update/{conv}', 'ConvocazioneController@update')->name('updateConv');
 
     Route::get('/listadoc', 'DocumentoController@listaDoc')->name('listaDoc');
+    Route::get('/listadocpref', 'DocumentoController@listaDocPref')->name('listadocPref');
     Route::delete('/deldoc/{doc}', 'DocumentoController@destroy')->name('delDoc');
+    Route::delete('/deltag/{doc}', 'DocumentoController@deltag')->name('delTag');
+    Route::get('/addfav/{doc}', 'DocumentoController@addDocFav')->name('addDocFav');
 
     //ROTTE dei TAGS
 

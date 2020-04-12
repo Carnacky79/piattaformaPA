@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'listadoc', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Documenti Caricati'])
+@extends('layouts.app', ['activePage' => 'listadocpref', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Documenti Caricati'])
 
 @section('content')
     <div class="content">
@@ -147,7 +147,7 @@
             var conf = confirm(msg);
             if(conf){
                 addFav(data['id']);
-                $(this).toggleClass('btn-fill');
+                table.row($(this).parents('tr')).remove().draw();
             }
         } );
     } );

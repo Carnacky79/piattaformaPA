@@ -33,9 +33,9 @@ class Documento extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function docTag()
+    public function tags()
     {
-        return $this->hasMany('App\DocTag', 'id_doc', 'id');
+        return $this->belongsToMany('App\Tag', 'doc_tags', 'id_doc', 'id_tag');
     }
 
     /**

@@ -168,6 +168,7 @@
                                         @else
                                             <button type="submit" class="btn btn-warning btn-wd">{{ __('Salva') }}</button>
                                         @endif
+
                                     </div>
                                     @endif
                                 </div>
@@ -289,6 +290,17 @@
                         "id": id
                     },
                     success: function () {
+                        $.notify({
+                            icon: "glyphicon glyphicon-warning-sign",
+                            message: "Record eliminato correttamente"
+                        },{
+                            type: 'danger',
+                            timer: 3000,
+                            placement: {
+                                from: 'top',
+                                align: 'right'
+                            }
+                        });
                         $(e.target).parent().parent().fadeOut(500, function () {
                             $(this).remove();
                         });
@@ -322,9 +334,17 @@
             cache: false,
             timeout: 30000,
             success: function (data) {
-
-                //$("#result").text(data);
-                console.log("SUCCESS : ", data);
+                $.notify({
+                    icon: "glyphicon glyphicon-warning-sign",
+                    message: "Record aggiornato correttamente"
+                },{
+                    type: 'success',
+                    timer: 3000,
+                    placement: {
+                        from: 'top',
+                        align: 'right'
+                    }
+                });
                 $("#aggiorna").prop("disabled", false);
 
             },
@@ -338,6 +358,7 @@
         });
 
     });
+
 
 
 </script>

@@ -33,10 +33,10 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Lista Documenti") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
-                    <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Typography") }}</p>
+            <li class="nav-item @if($activePage == 'listadocpref') active @endif">
+                <a class="nav-link" href="{{route('listadocPref')}}">
+                    <i class="nc-icon nc-favourite-28"></i>
+                    <p>{{ __("Lista Documenti Pref") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'icons') active @endif">

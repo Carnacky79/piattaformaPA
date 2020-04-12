@@ -21,8 +21,8 @@ class Tag extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function docTag()
+    public function docs()
     {
-        return $this->hasMany('App\DocTag', 'id_tag', 'id');
+        return $this->belongsToMany('App\Documento', 'doc_tags', 'id_tag', 'id_doc');
     }
 }

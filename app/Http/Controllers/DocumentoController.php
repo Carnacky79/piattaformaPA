@@ -19,10 +19,19 @@ class DocumentoController extends Controller
         //
     }
 
-    public function listaConv(){
-        $docs = Documento::All();
+    public function listaDoc(){
+        $docs = Documento::with('tags')->get();
+        //dd($docs);
 
         return view('listadoc',['Documenti' => $docs]);
+
+    }
+
+    public function listaDocPref(){
+        $docs = Documento::with('tags')->where('preferito','=', 1)->get();
+        //dd($docs);
+
+        return view('listadocpref',['Documenti' => $docs]);
 
     }
 
@@ -90,9 +99,35 @@ class DocumentoController extends Controller
     public function destroy($id)
     {
         $filedoc = Documento::find($id);
+        $filedoc->tags()->detach();
         $filedoc = $filedoc->nome_file;
+
         Documento::destroy($id);
         Storage::delete('documenti/'.$filedoc);
+        return response()->json(['success' => true]);
+
+    }
+
+    public function deltag($id)
+    {
+        $doc = Documento::find($id);
+        $doc->tags()->detach();
+
+        return response()->json(['success' => true]);
+
+    }
+
+    public function addDocFav($id)
+    {
+        $doc = Documento::find($id);
+        if($doc->preferito == 0){
+            $doc->preferito = 1;
+        }else{
+            $doc->preferito = 0;
+        }
+
+        $doc->save();
+
         return response()->json(['success' => true]);
 
     }
