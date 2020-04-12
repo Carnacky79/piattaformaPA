@@ -136,7 +136,7 @@
                     $(this).children('i').removeClass('fa-plus').addClass('fa-minus');
                     sib.removeClass('hidden').addClass('show');
                     sib.children('#inputTag'+data['id']).autocomplete({
-                        serviceUrl: '/tags/list',
+                        serviceUrl: '{{route('listaTag')}}',
                         onSelect: null
                     });
                 }else {
@@ -151,7 +151,7 @@
                 var data = table.row( $(this).parents('tr') ).data();
                 var url = '{{ route('download', ':id') }}';
                 url = url.replace(':id', data['nome_file']);
-                window.open(url);
+                window.locatioin = url;
             } );
 
             $('#table_id tbody').on( 'click', 'button#delete', function () {

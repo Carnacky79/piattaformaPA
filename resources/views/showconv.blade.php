@@ -128,7 +128,7 @@
 
                                                         <div class="form-group mt-2 col-6">
                                                             <h6 class="d-inline ml-4 mr-2">Nome File: </h6>
-                                                            <a href="/download/{{ $doc->nome_file }}" title="Scarica il file">{{ $doc->nome_file }}</a>
+                                                            <a href="{{route('download', $doc->nome_file)}}" title="Scarica il file">{{ $doc->nome_file }}</a>
                                                         </div>
                                                         <div class="form-group mt-2 col-3">
                                                             <h6 class="d-inline ml-4 mr-2">Tipo File: </h6>
@@ -244,6 +244,8 @@
 
         function delfromdbDoc(e, id){
             e.preventDefault();
+            var url = '{{ route('delDoc', ':id') }}';
+            url = url.replace(':id', id);
             var confirmmssg = confirm('Sicuro di voler eliminare questo documento?');
             $.ajaxSetup({
                 headers: {
@@ -253,7 +255,7 @@
             if (confirmmssg ) {
                 $.ajax(
                     {
-                        url: "/deldoc/" + id,
+                        url: url,
                         type: 'DELETE',
                         dataType: "JSON",
                         data: {
@@ -274,7 +276,11 @@
 
     function delfromdbOrd(e, id){
         e.preventDefault();
+        var url = '{{ route('delOrd', ':id') }}';
+        url = url.replace(':id', id);
+
         var confirmmssg = confirm('Sicuro di voler eliminare l\'OdG?');
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -283,7 +289,7 @@
         if (confirmmssg ) {
             $.ajax(
                 {
-                    url: "/delord/" + id,
+                    url: url,
                     type: 'DELETE',
                     dataType: "JSON",
                     data: {
@@ -322,12 +328,15 @@
 
         var data = new FormData(form);
 
+        var url = '{{ route('updateConv', ':id') }}';
+        url = url.replace(':id', id);
+
         $("#aggiorna").prop("disabled", true);
 
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: "/update/" + id,
+            url: url,
             data: data,
             processData: false,
             contentType: false,
