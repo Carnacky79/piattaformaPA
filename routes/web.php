@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //ROTTE dei TAGS
     Route::get('/tags/list', 'TagController@listaTag')->name('listaTag');
+    Route::post('/tags/{id}/{tag}', 'TagController@addTag')->name('addTag');
 
     //ROTTE degli Ordini del Giorno
 

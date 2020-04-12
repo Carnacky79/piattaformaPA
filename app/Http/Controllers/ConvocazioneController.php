@@ -72,7 +72,7 @@ class ConvocazioneController extends Controller
         }
 
         if($request->hasFile('file')) {
-            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc'];
             $files = $data['file'];
             foreach ($files as $file) {
                 $random = rand(1,999);
@@ -158,7 +158,7 @@ class ConvocazioneController extends Controller
 
         $conv->save();
 
-        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc'];
         if($request->hasFile('file')) {
             foreach($req['file'] as $file){
                 $random = rand(1,999);

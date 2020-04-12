@@ -39,7 +39,7 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Lista Documenti Pref") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
+            <!--<li class="nav-item @if($activePage == 'icons') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'icons')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Icons") }}</p>
@@ -56,7 +56,7 @@ Tip 2: you can also add an image using data-image tag
                     <i class="nc-icon nc-bell-55"></i>
                     <p>{{ __("Notifications") }}</p>
                 </a>
-            </li>
+            </li>-->
 
         </ul>
     </div>
