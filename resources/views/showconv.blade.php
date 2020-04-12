@@ -1,15 +1,15 @@
-@extends('layouts.app', ['activePage' => 'creaconv', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Aggiungi nuova Convocazione'])
+@extends('layouts.app', ['activePage' => 'creaconv', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => (Auth::user()->ruolo == 'amministratore')  ? 'Aggiungi nuova Convocazione' : 'Visualizza Convocazione'])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <form class="form" method="POST" action="{{ route('addConv') }}" enctype="multipart/form-data">
+                    <form id="form" class="form" method="POST" action="{{ route('addConv') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="card card-login card-hidden">
                             <div class="card-header ">
-                                <h3 class="header text-center">{{ __('Aggiungi Convocazione') }}</h3>
+                                <h3 class="header text-center">{{ (Auth::user()->ruolo == 'amministratore') ? __('Aggiungi o Modifica Convocazione') : __('Visualizza Convocazione')  }}</h3>
                             </div>
                             <div class="card-body ">
 
@@ -60,14 +60,18 @@
                                     </div>
 
                                     <div class="form-group mt-3" id="added">
-                                        <div class="col-12 text-left mt-5 mb-1">
-                                            <h5>@if($ordinidelgiorno->count() > 0)Ordine del Giorno @else Non sono stati inseriti Ordini del Giorno @endif</h5>
-                                        </div>
                                         <div class="row">
+                                            <div class="col-12 text-left mt-5 mb-1">
+                                                <h5>@if($ordinidelgiorno->count() > 0)Ordine del Giorno @else Non sono stati inseriti Ordini del Giorno @endif</h5>
+                                            </div>
+                                        </div>
+
                                             @if($ordinidelgiorno->count() > 0)
                                                 @foreach($ordinidelgiorno as $odg)
+                                                <div class="row">
                                                     @if(Auth::user()->ruolo == 'amministratore')
                                                         <div class="form-group mt-2 col-4">
+                                                            <input id="id_ordine" type="hidden" name="id_ordine[]" value="{{ $odg->id }}">
                                                             <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
                                                             <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ $odg->titolo_og }}"  autofocus>
                                                         </div>
@@ -76,7 +80,7 @@
                                                             <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ $odg->descrizione_og }}"  autofocus>
                                                         </div>
                                                         <div class="form-group mt-2 col-3">
-                                                            <button onclick="delfromdbOrd(event)" id="eliminaordine" class="btn btn-danger btn-wd">{{ __('Elimina OdG') }}</button>
+                                                            <button onclick="delfromdbOrd(event, {{ $odg->id }})" id="eliminaordine" class="btn btn-danger btn-wd">{{ __('Elimina OdG') }}</button>
                                                         </div>
                                                     @else
                                                         <div class="form-group mt-2 col-4">
@@ -91,52 +95,81 @@
 
                                                         </div>
                                                     @endif
+                                                </div>
                                                 @endforeach
                                             @endif
 
                                         @if(Auth::user()->ruolo == 'amministratore')
-                                            <div class="form-group mt-2 col-4">
-                                                <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
-                                                <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ old('titolo_ordine') }}"  autofocus>
-                                            </div>
-                                            <div class="form-group mt-2 col-5">
-                                                <label for="desc_ordine" class="d-inline col-md-6 col-form-label">{{ __('Descrizione') }}</label>
-                                                <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
-                                            </div>
-                                            <div class="form-group mt-2 col-3">
-                                                <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+                                            <div class="row">
+                                                <div class="form-group mt-2 col-4">
+                                                    <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
+                                                    <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ old('titolo_ordine') }}"  autofocus>
+                                                </div>
+                                                <div class="form-group mt-2 col-5">
+                                                    <label for="desc_ordine" class="d-inline col-md-6 col-form-label">{{ __('Descrizione') }}</label>
+                                                    <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
+                                                </div>
+                                                <div class="form-group mt-2 col-3">
+                                                    <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+                                                </div>
                                             </div>
                                         @endif
-                                        </div>
+
                                     </div>
                                     <div class="form-group mt-3" id="files">
-                                        <div class="col-12 text-left mt-5 mb-1">
-                                            <h5>@if($documenti->count() > 0) Lista Documenti e Files @else Nessun Documento caricato @endif</h5>
+                                        <div class="row">
+                                            <div class="col-12 text-left mt-5 mb-1">
+                                                <h5>@if($documenti->count() > 0) Lista Documenti e Files @else Nessun Documento caricato @endif</h5>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                        @if(Auth::user()->ruolo == 'amministratore')
-                                            <div class="form-group mt-2 col-6">
-                                                <label for="file" class="d-inline col-md-6 col-form-label">{{ __('Documento') }}</label>
-                                                <input style="width:60%" id="file" type="file" class="d-inline form-control " name="file[]" autofocus>
-                                            </div>
-                                            <div class="form-group mt-2 col-3">
+                                            @if($documenti->count() > 0)
+                                                @foreach($documenti as $doc)
 
-                                            </div>
-                                            <div class="form-group mt-2 col-3">
-                                                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                                                        <div class="form-group mt-2 col-6">
+                                                            <h6 class="d-inline ml-4 mr-2">Nome File: </h6>
+                                                            <a href="/download/{{ $doc->nome_file }}" title="Scarica il file">{{ $doc->nome_file }}</a>
+                                                        </div>
+                                                        <div class="form-group mt-2 col-3">
+                                                            <h6 class="d-inline ml-4 mr-2">Tipo File: </h6>
+                                                            {{ $doc->tipo_file }}
+                                                        </div>
+                                                        <div class="form-group mt-2 col-3">
+                                                            @if(Auth::user()->ruolo == 'amministratore')
+                                                                <button onclick="delfromdbDoc(event, {{ $doc->id }})" id="eliminadocumento" class="btn btn-danger btn-wd">{{ __('Elimina Documento') }}</button>
+                                                            @endif
+                                                        </div>
+
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        @if(Auth::user()->ruolo == 'amministratore')
+                                            <div class="row">
+                                                <div class="form-group mt-2 col-6">
+                                                    <label for="file" class="d-inline col-md-6 col-form-label">{{ __('Documento') }}</label>
+                                                    <input style="width:60%" id="file" type="file" class="d-inline form-control " name="file[]" autofocus>
+                                                </div>
+                                                <div class="form-group mt-2 col-3">
+                                                    &nbsp;
+                                                </div>
+                                                <div class="form-group mt-2 col-3">
+                                                    <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                                                </div>
                                             </div>
                                         @endif
-                                        </div>
+
                                     </div>
 
                                 <div class="card-footer ml-auto mr-auto">
+                                    @if(Auth::user()->ruolo == 'amministratore')
                                     <div class="container text-center mx-auto" style="max-width: 100%" >
                                         @if($titolo != '')
-                                            <button type="button" class="btn btn-warning btn-wd">{{ __('Aggiorna') }}</button>
+                                            <button id="aggiorna" convid="{{$id}}" type="button" class="btn btn-warning btn-wd">{{ __('Aggiorna') }}</button>
                                         @else
                                             <button type="submit" class="btn btn-warning btn-wd">{{ __('Salva') }}</button>
                                         @endif
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -149,6 +182,7 @@
 
 @push('js')
 <script>
+
     function addOrder(event){
         event.preventDefault();
         $("#aggiungiordine").remove();
@@ -206,5 +240,105 @@
         }
         $(event.target).parent().parent().remove();
     }
+
+        function delfromdbDoc(e, id){
+            e.preventDefault();
+            var confirmmssg = confirm('Sicuro di voler eliminare questo documento?');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            if (confirmmssg ) {
+                $.ajax(
+                    {
+                        url: "/deldoc/" + id,
+                        type: 'DELETE',
+                        dataType: "JSON",
+                        data: {
+                            "id": id
+                        },
+                        success: function () {
+                            $(e.target).parent().parent().fadeOut(1000, function () {
+                                $(this).remove();
+                            });
+                            console.log($(e.target));
+                        },
+                        error: function (xhr) {
+                            console.log(xhr.responseText);
+                        }
+                    })
+            }
+        }
+
+    function delfromdbOrd(e, id){
+        e.preventDefault();
+        var confirmmssg = confirm('Sicuro di voler eliminare l\'OdG?');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        if (confirmmssg ) {
+            $.ajax(
+                {
+                    url: "/delord/" + id,
+                    type: 'DELETE',
+                    dataType: "JSON",
+                    data: {
+                        "id": id
+                    },
+                    success: function () {
+                        $(e.target).parent().parent().fadeOut(500, function () {
+                            $(this).remove();
+                        });
+                        console.log($(e.target));
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                })
+        }
+    }
+
+    $("#aggiorna").click(function (event) {
+        event.preventDefault();
+
+        var id = $(event.target).attr('convid');
+
+        var form = $('#form')[0];
+
+        var data = new FormData(form);
+
+        $("#aggiorna").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/update/" + id,
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 30000,
+            success: function (data) {
+
+                //$("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#aggiorna").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                //$("#result").text(e.responseText);
+                console.log("ERROR : ", e.responseText);
+                $("#aggiorna").prop("disabled", false);
+
+            }
+        });
+
+    });
+
+
 </script>
 @endpush

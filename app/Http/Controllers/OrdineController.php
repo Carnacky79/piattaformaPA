@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ordine;
 use Illuminate\Http\Request;
 
 class OrdineController extends Controller
@@ -75,10 +76,11 @@ class OrdineController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        Ordine::destroy($id);
+        return response()->json(['success' => true]);
     }
 }

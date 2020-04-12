@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Documento;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentoController extends Controller
 {
@@ -14,6 +17,13 @@ class DocumentoController extends Controller
     public function index()
     {
         //
+    }
+
+    public function listaConv(){
+        $docs = Documento::All();
+
+        return view('listadoc',['Documenti' => $docs]);
+
     }
 
     /**
@@ -75,10 +85,15 @@ class DocumentoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        $filedoc = Documento::find($id);
+        $filedoc = $filedoc->nome_file;
+        Documento::destroy($id);
+        Storage::delete('documenti/'.$filedoc);
+        return response()->json(['success' => true]);
+
     }
 }

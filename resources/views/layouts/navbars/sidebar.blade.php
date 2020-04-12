@@ -14,23 +14,23 @@ Tip 2: you can also add an image using data-image tag
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
                 <a class="nav-link" href="{{route('dashboard')}}">
                     <i class="nc-icon nc-chart-pie-35"></i>
-                    <p>{{ __("Home") }}</p>
+                    <p>{{ __("Agenda") }}</p>
                 </a>
             </li>
 
             <li class="nav-item @if($activePage == 'listaconv') active @endif">
                 <a class="nav-link" href="{{route('listaConv')}}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-notes"></i>
                     <p>{{ __("Lista Convocazioni") }}</p>
                 </a>
             </li>
 
 
 
-            <li class="nav-item @if($activePage == 'table') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'table')}}">
-                    <i class="nc-icon nc-notes"></i>
-                    <p>{{ __("Table List") }}</p>
+            <li class="nav-item @if($activePage == 'listadoc') active @endif">
+                <a class="nav-link" href="{{route('listaDoc')}}">
+                    <i class="nc-icon nc-paper-2"></i>
+                    <p>{{ __("Lista Documenti") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'typography') active @endif">

@@ -18,19 +18,24 @@ Auth::routes();
 
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/download/{file}', 'DownloadsController@download');
+
     Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
     Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
     Route::get('/creaconv', 'ConvocazioneController@create')->name('creaConv');
     Route::post('/addconv', 'ConvocazioneController@store')->name('addConv');
     Route::get('/listaconv/{conv}', 'ConvocazioneController@show')->name('showConv');
     Route::get('/delconv/{conv}', 'ConvocazioneController@destroy')->name('delConv');
+    Route::post('/update/{conv}', 'ConvocazioneController@update')->name('updateConv');
 
-    Route::get('/creadoc', 'DocumentoController@create')->name('creaDoc');
-    Route::post('/adddoc', 'DocumentoController@store')->name('addDoc');
+    Route::get('/listadoc', 'DocumentoController@listaDoc')->name('listaDoc');
+    Route::delete('/deldoc/{doc}', 'DocumentoController@destroy')->name('delDoc');
 
     //ROTTE dei TAGS
 
     //ROTTE degli Ordini del Giorno
+
+    Route::delete('/delord/{ord}', 'OrdineController@destroy')->name('delOrd');
 });
 
 Route::group(['middleware' => 'auth'], function () {

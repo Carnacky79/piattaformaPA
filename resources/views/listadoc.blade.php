@@ -1,4 +1,4 @@
-@extends('layouts.app', ['activePage' => 'listaconv', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Convocazioni'])
+@extends('layouts.app', ['activePage' => 'listadoc', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Documenti Caricati'])
 
 @section('content')
     <div class="content">
@@ -19,12 +19,13 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Titolo</th>
-                            <th>Descrizione</th>
-                            <th>Data Inizio</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Tags</th>
                             <th>Data Fine</th>
-                            <th>Azioni</th>
-
+                            @if(Auth::user()->ruolo == 'amministratore')
+                                <th>Azioni</th>
+                            @endif
                         </tr>
                         </thead>
                         <tfoot>
@@ -34,8 +35,9 @@
                             <th>Descrizione</th>
                             <th>Data Inizio</th>
                             <th>Data Fine</th>
-                            <th>Azioni</th>
-
+                            @if(Auth::user()->ruolo == 'amministratore')
+                                <th>Azioni</th>
+                            @endif
                         </tr>
                         </tfoot>
 

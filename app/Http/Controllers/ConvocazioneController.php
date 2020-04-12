@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ordine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -100,7 +101,7 @@ class ConvocazioneController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -112,6 +113,7 @@ class ConvocazioneController extends Controller
         $odg = $conv->ordiniGiorno();
 
         return view('showconv',[
+            'id' => $conv->id,
             'titolo' => $conv->titolo,
             'descrizione' => $conv->descrizione,
             'datainizio' => date_format($data_inizio, $format),
@@ -137,11 +139,62 @@ class ConvocazioneController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $req = $request->all();
+
+        $conv = Convocazione::find($id);
+
+        $titolo = $req['titolo_convocazione'];
+        $descrizione = $req['desc_convocazione'];
+        $data_inizio = $req['data_inizio'];
+        $data_fine = $req['data_fine'];
+
+        $conv->titolo = $titolo;
+        $conv->descrizione = $descrizione;
+        $conv->data_inizio = $data_inizio;
+        $conv->data_fine = $data_fine;
+
+        $conv->save();
+
+        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx'];
+        if($request->hasFile('file')) {
+            foreach($req['file'] as $file){
+                $random = rand(1,999);
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedfileExtension);
+                $exist = Storage::disk('local')->exists('documenti/'.$filename);
+
+                if ($check) {
+                    if($exist){
+                        $filename = substr($filename, 0, strpos($filename, '.'.$extension)).$random.'.'.$extension;
+                    }
+                    $filepath = $file->storeAs(
+                        'documenti', $filename
+                    );
+                    $conv->documenti()->create(['nome_file' => $filename, 'tipo_file' => $extension, 'percorso_file' => $filepath]);
+                }
+            }
+        }
+
+        if($request->has('titolo_ordine')) {
+
+            foreach($req['titolo_ordine'] as $index => $titolo_ordine){
+                if($titolo_ordine != '') {
+                    //dd($req['id_ordine'][$index]);
+                    $odg = Ordine::findOrNew($req['id_ordine'][$index]??0);
+                    $odg->titolo_og = $titolo_ordine;
+                    $odg->descrizione_og = $req['desc_ordine'][$index];
+                    $odg->id_convocazione = $conv->id;
+                    $odg->save();
+                }
+            }
+        }
+
+        return response()->json(['success' => true]);
     }
 
     /**
