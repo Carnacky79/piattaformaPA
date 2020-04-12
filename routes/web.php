@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/addfav/{doc}', 'DocumentoController@addDocFav')->name('addDocFav');
 
     //ROTTE dei TAGS
+    Route::get('/tags/list', 'TagController@listaTag')->name('listaTag');
 
     //ROTTE degli Ordini del Giorno
 

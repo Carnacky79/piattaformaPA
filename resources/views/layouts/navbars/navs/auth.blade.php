@@ -16,7 +16,7 @@
                 <li class="nav-item">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <a class="text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> {{ __('Esci') }} </a>
+                        <a class="text-danger nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <p style="font-size:2rem; font-variant: small-caps"><i style="font-size:1rem" class="nc-icon nc-button-power"></i> {{ __('esci') }}</p> </a>
                     </form>
                 </li>
             </ul>

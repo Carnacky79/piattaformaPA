@@ -81,4 +81,8 @@ class TagController extends Controller
     {
         //
     }
+
+    public function listaTag(){
+
+    }
 }

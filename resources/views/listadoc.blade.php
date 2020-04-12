@@ -74,7 +74,7 @@
             "render": function(data, type, row){
 
 
-                //console.log(row);
+                idInput = 'inputTag' + row['id'];
                 if(row['tags'].length > 0){
                     let tags = '';
                     row['tags'].forEach(function(item, index){
@@ -82,11 +82,15 @@
                         }
                     );
                     tags += '<button id="addTag" class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>';
+                    tags += '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
+                            '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
 
                     return tags;
 
                 }else{
-                    return '<button id="addTag" docid="' + row['id'] + '"  class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>';
+                    return '<button style="display:inline; height:18px;" id="addTag" docid="' + row['id'] + '"  class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>' +
+                        '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
+                        '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
                 }
 
 
@@ -112,6 +116,28 @@
 
 
     } );
+
+
+
+        $('#table_id tbody').on( 'click', 'button#addTag', function () {
+            var sib = $(this).siblings('div#formtag');
+            var data = table.row( $(this).parents('tr') ).data();
+            if(sib.hasClass('hidden')) {
+                $(this).children('i').removeClass('fa-plus').addClass('fa-minus');
+                sib.removeClass('hidden').addClass('show');
+                sib.children('#inputTag'+data['id']).autocomplete({
+                    serviceUrl: '/tags/list',
+                    onSelect: function (suggestion) {
+                        alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                    }
+                });
+            }else {
+                if(sib.hasClass('show')){
+                    $(this).children('i').removeClass('fa-minus').addClass('fa-plus');
+                    sib.removeClass('show').addClass('hidden');
+                }
+            }
+        });
 
         $('#table_id tbody').on( 'click', 'button#download', function () {
             var data = table.row( $(this).parents('tr') ).data();

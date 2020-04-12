@@ -27,7 +27,16 @@
 
 
 
-            </head>
+    </head>
+    <style>
+        .hidden{
+            display:none;
+        }
+
+        .show{
+            display:inline;
+        }
+    </style>
 
     <body>
         <div class="wrapper @if (!auth()->check() || request()->route()->getName() == "") wrapper-full-page @endif">
@@ -76,5 +85,9 @@
     <script src='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.js'></script>
 
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/core/datatables.min.js') }}"></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/jquery.autocomplete.min.js') }}"></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/demo.js') }}"></script>
     @stack('js')
 </html>
