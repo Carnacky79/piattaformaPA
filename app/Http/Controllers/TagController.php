@@ -109,4 +109,10 @@ class TagController extends Controller
             $doc->tags()->attach($Tag->id);
         }
     }
+
+    public function percTag(){
+        $tags = Tag::All();
+        $data = json_encode($tags);
+        return view('perctag')->with(['data' => $data]);
+    }
 }

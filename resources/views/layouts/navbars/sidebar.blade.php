@@ -39,6 +39,12 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Lista Documenti Pref") }}</p>
                 </a>
             </li>
+            <li class="nav-item @if($activePage == 'listatag') active @endif">
+                <a class="nav-link" href="{{route('percTag')}}">
+                    <i class="nc-icon nc-chart-bar-32"></i>
+                    <p>{{ __("Lista Tags") }}</p>
+                </a>
+            </li>
             <!--<li class="nav-item @if($activePage == 'icons') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'icons')}}">
                     <i class="nc-icon nc-atom"></i>

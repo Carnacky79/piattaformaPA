@@ -19,6 +19,8 @@
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="{{ asset('light-bootstrap/css/demo.css') }}" rel="stylesheet" />
 
+        <link href="{{ asset('light-bootstrap/css/Chart.min.css') }}" rel="stylesheet" />
+
         <link href='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css' rel='stylesheet' />
 
         <link href='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css' rel='stylesheet' />
@@ -75,8 +77,6 @@
     <script src="{{ asset('light-bootstrap/js/plugins/jquery.sharrre.js') }}"></script>
     <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
     <script src="{{ asset('light-bootstrap/js/plugins/bootstrap-switch.js') }}"></script>
-    <!--  Chartist Plugin  -->
-    <script src="{{ asset('light-bootstrap/js/plugins/chartist.min.js') }}"></script>
     <!--  Notifications Plugin    -->
     <script src="{{ asset('light-bootstrap/js/plugins/bootstrap-notify.js') }}"></script>
     <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
@@ -94,6 +94,8 @@
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/core/datatables.min.js') }}"></script>
 
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/jquery.autocomplete.min.js') }}"></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/Chart.bundle.min.js') }}"></script>
 
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/demo.js') }}"></script>
     @stack('js')
