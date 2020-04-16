@@ -151,13 +151,17 @@
                 var data = table.row( $(this).parents('tr') ).data();
                 var url = '{{ route('download', ':id') }}';
                 url = url.replace(':id', data['nome_file']);
-                window.locatioin = url;
+                //console.log(url);
+                window.location = url;
             } );
 
             $('#table_id tbody').on( 'click', 'button#delete', function () {
                 var data = table.row( $(this).parents('tr') ).data();
-                DeleteThis(data['id']);
-                table.row($(this).parents('tr')).remove().draw();
+                var confirmmssg = confirm("Sicuro di voler eliminare il documento?");
+                if (confirmmssg ) {
+                    DeleteThis(data['id']);
+                    table.row($(this).parents('tr')).remove().draw();
+                }
             } );
 
             $('#table_id tbody').on( 'click', 'button#delTag', function () {
@@ -188,10 +192,10 @@
 
         function DeleteThis( id )
         {
-            var confirmmssg = confirm("Sicuro di voler eliminare il documento?");
+
             var url = '{{ route('delDoc', ':id') }}';
             url = url.replace(':id', id);
-            if (confirmmssg ){
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -201,7 +205,7 @@
                     type: "delete",
                     url: url,
                 });
-            }
+
         }
 
         function DeleteTag( id )

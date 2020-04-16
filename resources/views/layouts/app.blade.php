@@ -97,6 +97,11 @@
 
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/Chart.bundle.min.js') }}"></script>
 
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/moment-with-locales.js') }}"></script>
+
+    <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/plugins/datetime-moment.js') }}"></script>
+
     <script type="text/javascript" charset="utf8" src="{{ asset('light-bootstrap/js/demo.js') }}"></script>
+
     @stack('js')
 </html>

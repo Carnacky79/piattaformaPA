@@ -47,7 +47,6 @@ class ConvocazioneController extends Controller
             'titolo_convocazione' => 'required',
             'desc_convocazione' => 'required',
             'data_inizio' => 'required|date',
-            'data_fine' => 'required|date'
         ]);
 
         if($validator->fails()){
@@ -61,7 +60,9 @@ class ConvocazioneController extends Controller
         $conv->titolo = $data['titolo_convocazione'];
         $conv->descrizione = $data['desc_convocazione'];
         $conv->data_inizio = $data['data_inizio'];
-        $conv->data_fine = $data['data_fine'];
+        if($data['data_fine'] !== '') {
+            $conv->data_fine = $data['data_fine'];
+        }
 
         $conv->save();
 
@@ -72,7 +73,7 @@ class ConvocazioneController extends Controller
         }
 
         if($request->hasFile('file')) {
-            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc'];
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7n'];
             $files = $data['file'];
             foreach ($files as $file) {
                 $random = rand(1,999);
@@ -158,7 +159,7 @@ class ConvocazioneController extends Controller
 
         $conv->save();
 
-        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc'];
+        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7n'];
         if($request->hasFile('file')) {
             foreach($req['file'] as $file){
                 $random = rand(1,999);

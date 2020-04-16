@@ -52,7 +52,7 @@
                                                 <label for="data_fine" class="col-md-6 col-form-label">{{ __('Data fine') }}</label>
 
                                                 <div class="col-md-12">
-                                                    <input value="@if($datafine){{$datafine}}@else{{ old('data_fine') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}" required autofocus>
+                                                    <input value="@if($datafine){{$datafine}}@else{{ old('data_fine') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}" autofocus>
                                                 </div>
                                             </div>
                                         </div>

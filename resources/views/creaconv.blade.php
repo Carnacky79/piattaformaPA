@@ -50,7 +50,7 @@
                                                 <label for="data_fine" class="col-md-6 col-form-label">{{ __('Data fine') }}</label>
 
                                                 <div class="col-md-12">
-                                                    <input id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}" required autofocus>
+                                                    <input id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}"  autofocus>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,11 +64,11 @@
                                         <div class="row">
                                             <div class="form-group mt-2 col-4">
                                                 <label for="titolo_ordine" class="d-inline col-md-6 col-form-label">{{ __('Titolo') }}</label>
-                                                <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]" value="{{ old('titolo_ordine') }}"  autofocus>
+                                                <input style="width:60%" id="titolo_ordine" type="text" class="d-inline form-control " name="titolo_ordine[]"  autofocus>
                                             </div>
                                             <div class="form-group mt-2 col-5">
                                                 <label for="desc_ordine" class="d-inline col-md-6 col-form-label">{{ __('Descrizione') }}</label>
-                                                <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
+                                                <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]"  autofocus>
                                             </div>
                                             <div class="form-group mt-2 col-3">
                                                 <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>

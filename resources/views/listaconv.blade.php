@@ -49,6 +49,7 @@
 @push('js')
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
+
         @isset($success)
         $.notify({
             icon: "glyphicon glyphicon-warning-sign",
@@ -64,7 +65,6 @@
         @endisset
         var convocazioni = {!!$Convocazioni!!};
 
-
     let table = $('#table_id').DataTable( {
         "language": {
             "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Italian.json"
@@ -77,8 +77,27 @@
     { data: 'id' },
     { data: 'titolo' },
     { data: 'descrizione' },
-    { data: 'data_inizio' },
-    { data: 'data_fine' },
+        {
+            "targets": 3,
+            "data": "data_inizio",
+            "render": function(data, type, row){
+
+                return moment(data).locale('it').format('LLLL');
+            }
+
+        },
+        {
+            "targets": 4,
+            "data": "data_fine",
+            "render": function(data, type, row){
+                if(data !== null){
+                    return moment(data).locale('it').format('LLLL');
+                }else{
+                    return "Nessuna data inserita";
+                }
+            }
+
+        },
         {
             "targets": -1,
             "data": null,
@@ -102,18 +121,21 @@
 
         $('#table_id tbody').on( 'click', 'button#delete', function () {
             var data = table.row( $(this).parents('tr') ).data();
-            DeleteThis(data['id']);
-            table.row($(this).parents('tr')).remove().draw();
+            var confirmmssg = confirm("Sicuro di voler eliminare la convocazione?");
+            if (confirmmssg ) {
+                DeleteThis(data['id']);
+                table.row($(this).parents('tr')).remove().draw();
+            }
         } );
 
     } );
 
     function DeleteThis( id )
     {
-        var confirmmssg = confirm("Sicuro di voler eliminare la convocazione?");
+
         var url = '{{ route('delConv', ':id') }}';
         url = url.replace(':id', id);
-        if (confirmmssg ){
+
             $.ajax({
                 type: "get",
                 url: url,
@@ -132,7 +154,6 @@
 
                 },
             });
-        }
     }
     </script>
 @endpush
