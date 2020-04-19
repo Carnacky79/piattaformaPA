@@ -44,4 +44,8 @@ class Convocazione extends Model
     {
         return $this->hasMany('App\Ordine', 'id_convocazione', 'id');
     }
+
+    public function tipologia(){
+        return $this->hasOne('App\TipoEventi', 'id', 'id_tipo');
+    }
 }

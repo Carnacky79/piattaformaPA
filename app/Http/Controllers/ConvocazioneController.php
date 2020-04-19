@@ -118,6 +118,7 @@ class ConvocazioneController extends Controller
             'descrizione' => $conv->descrizione,
             'datainizio' => date_format($data_inizio, $format),
             'datafine' => date_format($data_fine, $format),
+            'tipologia' => $conv->tipologia->nome_evento,
             'ordinidelgiorno' => $conv->ordiniGiorno()->get(),
             'documenti' => $conv->documenti()->get(),
         ]);
@@ -151,11 +152,13 @@ class ConvocazioneController extends Controller
         $descrizione = $req['desc_convocazione'];
         $data_inizio = $req['data_inizio'];
         $data_fine = $req['data_fine'];
+        $tipologia = $req['tipologia'];
 
         $conv->titolo = $titolo;
         $conv->descrizione = $descrizione;
         $conv->data_inizio = $data_inizio;
         $conv->data_fine = $data_fine;
+        $conv->id_tipo = $tipologia;
 
         $conv->save();
 

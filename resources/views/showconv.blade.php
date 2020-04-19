@@ -41,14 +41,23 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group mt-2 col-6">
+                                            <div class="form-group mt-2 col-4">
+                                                <label for="tipologia" class="col-md-6 col-form-label">{{ __('Tipologia Evento') }}</label>
+
+                                                <div class="col-md-12">
+                                                    <select id="tipologia" class="form-control">
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-2 col-4">
                                                 <label for="data_inizio" class="col-md-6 col-form-label">{{ __('Data inizio') }}</label>
 
                                                 <div class="col-md-12">
                                                     <input value="@if(strtotime($datainizio)>0){{$datainizio}}@else{{ old('data_inizio') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif id="data_inizio" type="datetime-local" class="form-control @error('data_inizio') is-invalid @enderror" name="data_inizio" value="{{ old('tdata_inizio') }}" required autofocus>
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-2 col-6">
+                                            <div class="form-group mt-2 col-4">
                                                 <label for="data_fine" class="col-md-6 col-form-label">{{ __('Data fine') }}</label>
 
                                                 <div class="col-md-12">
@@ -183,6 +192,25 @@
 
 @push('js')
 <script>
+    $(document).ready(function(){
+        $.ajax({
+            url: '{{route('listaTipologie')}}',
+            type: 'GET',
+            success: function(response){    // response contains json object in it
+                var options = '<option value="">Scegli la tipologia</option>';
+                for(var i=0;i<response.length; i++)
+                {
+                    if(response[i].nome_evento == '{{$tipologia}}') {
+                        options += "<option selected='selected' value='" + response[i].id + "'>" + response[i].nome_evento + "</option>";
+                    }else{
+                        options += "<option value='" + response[i].id + "'>" + response[i].nome_evento + "</option>";
+                    }
+                }
+
+                $("#tipologia").html(options);    // It will put the dynamic <option> set into the dropdown
+            }
+        });
+    });
 
     function addOrder(event){
         event.preventDefault();

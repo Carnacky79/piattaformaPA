@@ -40,8 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/tags/{id}/{tag}', 'TagController@addTag')->name('addTag');
 
     //ROTTE degli Ordini del Giorno
-
     Route::delete('/delord/{ord}', 'OrdineController@destroy')->name('delOrd');
+
+    //ROTTE per le Tipologie delle Convocazioni
+    Route::get('/tipologie/list', 'TipoController@tipologie')->name('listaTipologie');
 });
 
 Route::group(['middleware' => 'auth'], function () {
