@@ -1,17 +1,24 @@
-@extends('layouts.app', ['activePage' => 'listaconv', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Convocazioni'])
+@extends('layouts.app', ['activePage' => 'listatipologie', 'title' => 'Piattaforma consultazione contenuti multimediali', 'navName' => 'Lista Convocazioni per Tipologia'])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            @if(Auth::user()->ruolo == 'amministratore')
+
             <div class="row" style="margin-bottom: 20px">
-                <div class="col">
+                @if(Auth::user()->ruolo == 'amministratore')
+                <div class="col-2">
                     <a href="{{route('creaConv')}}" class="btn btn-success btn-fill">
                     <span class="nc-icon nc-simple-add"></span>&nbsp;Aggiungi Convocazione
                     </a>
                 </div>
+                @endif
+                    <div class="col-2">
+                        <select id="tipologia" name="tipologia" class="form-control">
+
+                        </select>
+                    </div>
             </div>
-            @endif
+
             <div class="row">
                 <div class="col">
                     <table id='table_id'>
@@ -51,6 +58,34 @@
 @push('js')
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
+
+        $.ajax({
+            url: '{{route('listaTipologie')}}',
+            type: 'GET',
+            success: function(response){    // response contains json object in it
+                var options = '<option value="">Scegli la tipologia</option>';
+                for(var i=0;i<response.length; i++)
+                {
+                    options += "<option value='"+response[i].id+"'>" + response[i].nome_evento + "</option>";
+                }
+
+                $("#tipologia").html(options);
+            }
+        });
+
+        $('#tipologia').change(function(){
+            var url = '{{ route('listaConvTip', ':id') }}';
+            url = url.replace(':id', $(this).val());
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response){
+                    table.clear();
+                    table.rows.add(response);
+                    table.draw();
+                }
+            });
+        });
 
         @isset($success)
         $.notify({
@@ -137,6 +172,14 @@
                 DeleteThis(data['id']);
                 table.row($(this).parents('tr')).remove().draw();
             }
+        } );
+
+        $('#table_id tbody').on( 'click', 'tr', function () {
+            var data = table.row($(this)).data();
+            convocazioni = "fottiti";
+            table.clear();
+            table.draw();
+            console.log(convocazioni);
         } );
 
     } );

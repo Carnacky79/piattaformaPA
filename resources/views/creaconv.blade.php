@@ -43,7 +43,7 @@
                                                 <label for="tipologia" class="col-md-6 col-form-label">{{ __('Tipologia Evento') }}</label>
 
                                                 <div class="col-md-12">
-                                                    <select id="tipologia" class="form-control">
+                                                    <select id="tipologia" name="tipologia" class="form-control">
 
                                                     </select>
                                                 </div>
@@ -129,7 +129,7 @@
                     options += "<option value='"+response[i].id+"'>" + response[i].nome_evento + "</option>";
                 }
 
-                $("#tipologia").html(options);    // It will put the dynamic <option> set into the dropdown
+                $("#tipologia").html(options);
             }
         });
     });

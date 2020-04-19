@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ordine;
+use App\TipoEventi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -14,14 +15,58 @@ class ConvocazioneController extends Controller
     public function index()
     {
         $items = Convocazione::All();
+        foreach($items as $key => $value){
+            $tipo = $items[$key]['id_tipo'];
+            switch($tipo){
+                case 0:
+                    $items[$key]['color'] = '#43C6DB';
+                    break;
+                case 1:
+                    $items[$key]['color'] = '#4AA02C';
+                    break;
+                case 2:
+                    $items[$key]['color'] = '#FDD017';
+                    break;
+                case 3:
+                    $items[$key]['color'] = '#C34A2C';
+                    break;
+                case 4:
+                    $items[$key]['color'] = '#FF0000';
+                    break;
+            }
+
+        }
 
         return view('dashboard',['Events' => $items]);
     }
 
     public function listaConv(){
         $conv = Convocazione::All();
+        $tipologie = TipoEventi::All();
 
-        return view('listaconv',['Convocazioni' => $conv]);
+
+        return view('listaconv',['Convocazioni' => $conv, 'Tipologie' => $tipologie]);
+
+    }
+
+    public function listaConvTipologie($id_tipo = NULL){
+        $convocazioni = Convocazione::where('id_tipo','=',$id_tipo)->get();
+        $conv = [];
+        foreach($convocazioni as $key => $value){
+            $conv[$key]['id'] = $value['id'];
+            $conv[$key]['titolo'] = $value['titolo'];
+            $conv[$key]['descrizione'] = $value['descrizione'];
+            $conv[$key]['data_inizio'] = $value['data_inizio'];
+            $conv[$key]['data_fine'] = $value['data_fine'];
+            $conv[$key]['id_tipo'] = $value['id_tipo'];
+        }
+
+        $tipologie = TipoEventi::All();
+        if($id_tipo === NULL) {
+            return view('listatipologie', ['Convocazioni' => json_encode($conv), 'Tipologie' => $tipologie]);
+        }else{
+            return response()->json($conv);
+        }
 
     }
 
@@ -63,6 +108,7 @@ class ConvocazioneController extends Controller
         if($data['data_fine'] !== '') {
             $conv->data_fine = $data['data_fine'];
         }
+        $conv->id_tipo = $data['tipologia'];
 
         $conv->save();
 

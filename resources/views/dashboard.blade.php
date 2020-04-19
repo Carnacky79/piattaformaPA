@@ -24,7 +24,8 @@
                     title: val.titolo,
                     start: val.data_inizio,
                     end: val.data_fine,
-                    url: url.replace(':id', val.id)
+                    url: url.replace(':id', val.id),
+                    color: val.color,
                 }
             });
 

@@ -39,6 +39,12 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Lista Documenti Pref") }}</p>
                 </a>
             </li>
+            <li class="nav-item @if($activePage == 'listatipologie') active @endif">
+                <a class="nav-link" href="{{route('listaConvTip')}}">
+                    <i class="nc-icon nc-chart-bar-32"></i>
+                    <p>{{ __("Tipologia Convocazioni") }}</p>
+                </a>
+            </li>
             <li class="nav-item @if($activePage == 'listatag') active @endif">
                 <a class="nav-link" href="{{route('percTag')}}">
                     <i class="nc-icon nc-chart-bar-32"></i>

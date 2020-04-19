@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'ConvocazioneController@index')->name('dashboard');
     Route::get('/listaconv', 'ConvocazioneController@listaConv')->name('listaConv');
+    Route::get('/listaconvtip/{id_tipo?}', 'ConvocazioneController@listaConvTipologie')->name('listaConvTip');
     Route::get('/creaconv', 'ConvocazioneController@create')->name('creaConv');
     Route::post('/addconv', 'ConvocazioneController@store')->name('addConv');
     Route::get('/listaconv/{conv}', 'ConvocazioneController@show')->name('showConv');
