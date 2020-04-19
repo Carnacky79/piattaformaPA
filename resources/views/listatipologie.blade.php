@@ -63,7 +63,7 @@
             url: '{{route('listaTipologie')}}',
             type: 'GET',
             success: function(response){    // response contains json object in it
-                var options = '<option value="">Scegli la tipologia</option>';
+                var options = '<option value="0">Scegli la tipologia</option>';
                 for(var i=0;i<response.length; i++)
                 {
                     options += "<option value='"+response[i].id+"'>" + response[i].nome_evento + "</option>";

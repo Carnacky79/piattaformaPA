@@ -62,7 +62,7 @@ class ConvocazioneController extends Controller
         }
 
         $tipologie = TipoEventi::All();
-        if($id_tipo === NULL) {
+        if($id_tipo === NULL || $id_tipo === 0) {
             return view('listatipologie', ['Convocazioni' => json_encode($conv), 'Tipologie' => $tipologie]);
         }else{
             return response()->json($conv);
