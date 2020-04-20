@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Documento;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -110,9 +111,43 @@ class TagController extends Controller
         }
     }
 
-    public function percTag(){
+    public function percTag($input = ''){
+        $documenti = Documento::with('tags')->whereHas('tags', function($query) use($input){
+            $query->where('tag', 'like', $input);
+        })->get();
+
         $tags = Tag::All();
-        $data = json_encode($tags);
-        return view('perctag')->with(['data' => $data]);
+        $docs = Documento::with(array('tags'=>function($query){
+            $query->select(DB::raw('tag'));
+        }))->get();
+        $doctag = [];
+
+        foreach($docs as $doc){
+            foreach($doc->tags as $tag) {
+                if(isset($doctag[$tag->tag])){
+                    $doctag[$tag->tag] += 1;
+                }else{
+                    $doctag[$tag->tag] = 1;
+                }
+            }
+        }
+
+        //dd($doctag);
+        foreach($tags as $key => $tag){
+            $primo = random_int(0,255);
+            $secondo = random_int(0,255);
+            $terzo = random_int(0,255);
+            $rgb = 'rgb('.$primo.','.$secondo.','.$terzo.')';
+            $data['labels'][] = $tag['tag'];
+            $data['datasets']['data'][] = $doctag[$tag['tag']];
+            $data['datasets']['backgroundColor'][] = $rgb;
+        }
+
+        if($input === '') {
+            return view('perctag')->with(['data' => json_encode($data), 'Documenti' => $documenti]);
+        }else{
+            return response()->json($documenti);
+        }
+
     }
 }
