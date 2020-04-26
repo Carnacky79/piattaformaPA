@@ -6,7 +6,7 @@
 
             <div class="row">
                 <div class="col">
-                    <table id='table_id'>
+                    <table id='table_id' class="stripe cell-border">
 
                         <thead>
                         <tr>

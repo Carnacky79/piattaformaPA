@@ -8,7 +8,7 @@
                     <canvas id="myChart" style="width:100%; height: 400px;"></canvas>
                 </div>
                 <div class="col-8">
-                    <table id='table_id'>
+                    <table id='table_id' class="stripe cell-border">
 
                         <thead>
                         <tr>
