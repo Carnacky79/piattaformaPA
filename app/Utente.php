@@ -27,4 +27,11 @@ class Utente extends Authenticatable
      */
     protected $fillable = ['nome_utente', 'password', 'ruolo'];
 
+    public function tags(){
+        return $this->hasMany('App\DocTag', 'id_utente', 'id');
+    }
+
+    public function doc_preferiti(){
+        return $this->belongsToMany('App\Documento', 'doc_preferiti', 'id_utente', 'id_doc');
+    }
 }

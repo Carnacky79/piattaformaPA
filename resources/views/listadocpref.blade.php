@@ -13,7 +13,7 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Tipo</th>
-                            <th>Tags</th>
+
                             <th>Azioni</th>
 
                         </tr>
@@ -23,7 +23,7 @@
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Tipo</th>
-                            <th>Tags</th>
+
                             <th>Azioni</th>
 
                         </tr>
@@ -41,7 +41,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         var documenti = {!!$Documenti!!};
-        //console.log(documenti);
+        console.log(documenti);
 
         let table = $('#table_id').DataTable( {
             "language": {
@@ -72,34 +72,6 @@
                 },
 
                 {
-                    "render": function(data, type, row){
-
-
-                        idInput = 'inputTag' + row['id'];
-                        if(row['tags'].length > 0){
-                            let tags = '';
-                            row['tags'].forEach(function(item, index){
-                                    tags += '<button id="delTag" class="btn btn-sm btn-info"><i class="fa fa-close"></i>' + item['tag'] + "</button>" + " ";
-                                }
-                            );
-                            tags += '<button id="addTag" class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>';
-                            tags += '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
-                                '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
-
-                            return tags;
-
-                        }else{
-                            return '<button style="display:inline; height:18px;" id="addTag" docid="' + row['id'] + '"  class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>' +
-                                '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
-                                '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
-                        }
-
-
-                    },
-                    "width": "35%",
-                    "targets": 3
-                },
-                {
                     "render": function ( data, type, row ) {
                         var btnclass = row['preferito'] == 1 ? 'btn-fill' : '';
                         return "<button id='download' title='Scarica il Documento' class='btn btn-primary btn-fill'><i class='nc-icon nc-tap-01'></i></button>" +
@@ -110,7 +82,7 @@
                             @endif;
                     },
                     "width": "15%",
-                    "targets": 4
+                    "targets": 3
                 },
             ],
 
@@ -130,24 +102,6 @@
             addingTag(data['id'], inputTag);
         } );
 
-        $('#table_id tbody').on( 'click', 'button#addTag', function () {
-            var sib = $(this).siblings('div#formtag');
-            var data = table.row( $(this).parents('tr') ).data();
-            if(sib.hasClass('hidden')) {
-                $(this).children('i').removeClass('fa-plus').addClass('fa-minus');
-                sib.removeClass('hidden').addClass('show');
-                sib.children('#inputTag'+data['id']).autocomplete({
-                    serviceUrl: '{{route('listaTag')}}',
-                    onSelect: null
-                });
-            }else {
-                if(sib.hasClass('show')){
-                    $(this).children('i').removeClass('fa-minus').addClass('fa-plus');
-                    sib.removeClass('show').addClass('hidden');
-                }
-            }
-        });
-
         $('#table_id tbody').on( 'click', 'button#download', function () {
             var data = table.row( $(this).parents('tr') ).data();
             var url = '{{ route('download', ':id') }}';
@@ -162,16 +116,6 @@
                 DeleteThis(data['id']);
                 table.row($(this).parents('tr')).remove().draw();
             }
-        } );
-
-        $('#table_id tbody').on( 'click', 'button#delTag', function () {
-            var data = table.row( $(this).parents('tr') ).data();
-            var conf = confirm("Eliminare il tag?");
-            if(conf){
-                DeleteTag(data['id']);
-                $(this).remove();
-            }
-
         } );
 
         $('#table_id tbody').on( 'click', 'button#addfav', function () {
@@ -207,25 +151,11 @@
 
     }
 
-    function DeleteTag( id )
-    {
-        var url = '{{ route('delTag', ':id') }}';
-        url = url.replace(':id', id);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: "delete",
-            url: url,
-        });
-
-    }
 
     function addFav( id )
     {
         var url = '{{ route('addDocFav', ':id') }}';
+
         url = url.replace(':id', id);
 
         $.ajax({
@@ -235,20 +165,6 @@
 
     }
 
-    function addingTag(id, tag){
-        var url = '{{ route('addTag', [':id', ':tag']) }}';
-        url = url.replace(':id', id);
-        url = url.replace(':tag', tag);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: "post",
-            url: url,
-        });
-    }
 
     </script>
 @endpush

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
  * @property int $id
@@ -11,8 +12,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Documenti $documenti
  * @property Tag $tag
  */
-class DocTag extends Model
+class DocTag extends Pivot
 {
+    protected $table = 'doc_tags';
     public $timestamps = false;
 
     /**
@@ -34,5 +36,9 @@ class DocTag extends Model
     public function tag()
     {
         return $this->belongsTo('App\Tag', 'id', 'id_tag');
+    }
+
+    public function utente(){
+        return $this->belongsTo('App\Utente', 'id', 'id_utente');
     }
 }

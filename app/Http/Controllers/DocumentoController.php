@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Documento;
+use App\Tag;
+use App\Utente;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentoController extends Controller
 {
@@ -19,17 +23,57 @@ class DocumentoController extends Controller
         //
     }
 
+    private function tagNameByID($id){
+        $tags = Tag::find($id);
+
+        return $tags->tag;
+    }
+
     public function listaDoc(){
         $docs = Documento::with('tags')->get();
-        //dd($docs);
+
+        $user = Utente::find(Auth::id());
+
+        $id_utente_loggato = $user->id;
+        $ruolo_utente_loggato = $user->ruolo;
+
+        $tag_utente = $user->tags()->get();
+
+        foreach($docs as $key => &$doc){
+            if(count($doc['tags']) > 0 && count($tag_utente) > 0){
+                foreach ($tag_utente as $k => $tag) {
+                    if (count($doc['tags']) > 0) {
+                        if ($doc['id'] == $tag['id_doc']) {
+                            $doc['tags'][$k]['tag'] = $this->tagNameByID($tag->id_tag);
+                        } else {
+                            $doc['tags'][$k]['tag'] = '';
+                        }
+                    }
+                }
+            }elseif(count($doc['tags']) > 0){
+                foreach($doc['tags'] as $j => $t){
+                    $t['tag'] = '';
+                }
+            }
+            //echo $key . ' - ' . $doc . '<br />';
+        }
+
+        //dd($tag_utente);
 
         return view('listadoc',['Documenti' => $docs]);
 
     }
 
     public function listaDocPref(){
-        $docs = Documento::with('tags')->where('preferito','=', 1)->get();
-        //dd($docs);
+        $docs = Documento::with('tags')->whereHas('utenti_preferiti', function($query) {
+            $query->where('id_utente', '=', Auth::id());
+        })->get();
+
+        $count = count($docs);
+
+        for($i = 0; $i < $count; $i++){
+            $docs[$i]['preferito'] = 1;
+        }
 
         return view('listadocpref',['Documenti' => $docs]);
 
@@ -108,10 +152,15 @@ class DocumentoController extends Controller
 
     }
 
-    public function deltag($id)
+    public function deltag($id, $tagName)
     {
-        $doc = Documento::find($id);
-        $doc->tags()->detach();
+        $tag = Tag::where('tag', 'like', $tagName)->get();
+        //dd($tag);
+        return DB::table('doc_tags')->where([
+            ['id_doc', $id],
+            ['id_tag', $tag[0]->id],
+            ['id_utente', Auth::id()]
+        ])->delete();
 
         return response()->json(['success' => true]);
 
@@ -120,11 +169,9 @@ class DocumentoController extends Controller
     public function addDocFav($id)
     {
         $doc = Documento::find($id);
-        if($doc->preferito == 0){
-            $doc->preferito = 1;
-        }else{
-            $doc->preferito = 0;
-        }
+        $utente = Auth::id();
+
+        $doc->utenti_preferiti()->toggle($utente);
 
         $doc->save();
 

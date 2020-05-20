@@ -102,11 +102,15 @@ class ConvocazioneController extends Controller
 
         $data = $request->all();
 
+        $data_inizio = date_create_from_format('Y-m-d H:i', $data['data_inizio'] . ' ' . $data['orainizio'] . ':' . $data['mininizio']);
+        $data_fine = date_create_from_format('Y-m-d H:i', $data['data_fine'] . ' ' . $data['orafine'] . ':' . $data['minfine']);
+
+
         $conv->titolo = $data['titolo_convocazione'];
         $conv->descrizione = $data['desc_convocazione'];
-        $conv->data_inizio = $data['data_inizio'];
-        if($data['data_fine'] !== '') {
-            $conv->data_fine = $data['data_fine'];
+        $conv->data_inizio = $data_inizio;
+        if($data_fine !== false) {
+            $conv->data_fine = $data_fine;
         }
         $conv->id_tipo = $data['tipologia'];
 
@@ -119,7 +123,7 @@ class ConvocazioneController extends Controller
         }
 
         if($request->hasFile('file')) {
-            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7n'];
+            $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7m'];
             $files = $data['file'];
             foreach ($files as $file) {
                 $random = rand(1,999);
@@ -154,16 +158,23 @@ class ConvocazioneController extends Controller
         $conv = Convocazione::find($id);
 
         $format = 'Y-m-d\TH:i:s';
-        $data_inizio = date_create($conv->data_inizio);
-        $data_fine = date_create($conv->data_fine);
-        $odg = $conv->ordiniGiorno();
+        $data_inizio = date_format(date_create($conv->data_inizio), 'Y-m-d');
+        $data_fine = date_format(date_create($conv->data_fine), 'Y-m-d');
+        $ora_inizio = date_format(date_create($conv->data_inizio), 'H');
+        $min_inizio = date_format(date_create($conv->data_inizio), 'i');
+        $ora_fine = date_format(date_create($conv->data_fine), 'H');
+        $min_fine = date_format(date_create($conv->data_fine), 'i');
 
         return view('showconv',[
             'id' => $conv->id,
             'titolo' => $conv->titolo,
             'descrizione' => $conv->descrizione,
-            'datainizio' => date_format($data_inizio, $format),
-            'datafine' => date_format($data_fine, $format),
+            'datainizio' => $data_inizio,
+            'orainizio' => $ora_inizio,
+            'mininizio' => $min_inizio,
+            'datafine' => $data_fine,
+            'orafine' => $ora_fine,
+            'minfine' => $min_fine,
             'tipologia' => $conv->tipologia->nome_evento,
             'ordinidelgiorno' => $conv->ordiniGiorno()->get(),
             'documenti' => $conv->documenti()->get(),
@@ -194,10 +205,11 @@ class ConvocazioneController extends Controller
 
         $conv = Convocazione::find($id);
 
+        $data_inizio = date_create_from_format('Y-m-d H:i', $req['data_inizio'] . ' ' . $req['orainizio'] . ':' . $req['mininizio']);
+        $data_fine = date_create_from_format('Y-m-d H:i', $req['data_fine'] . ' ' . $req['orafine'] . ':' . $req['minfine']);
+
         $titolo = $req['titolo_convocazione'];
         $descrizione = $req['desc_convocazione'];
-        $data_inizio = $req['data_inizio'];
-        $data_fine = $req['data_fine'];
         $tipologia = $req['tipologia'];
 
         $conv->titolo = $titolo;
@@ -208,7 +220,7 @@ class ConvocazioneController extends Controller
 
         $conv->save();
 
-        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7n'];
+        $allowedfileExtension = ['pdf', 'jpg', 'png', 'docx', 'doc', 'ppt', 'pptx', 'p7m'];
         if($request->hasFile('file')) {
             foreach($req['file'] as $file){
                 $random = rand(1,999);

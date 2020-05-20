@@ -45,4 +45,8 @@ class Documento extends Model
     {
         return $this->belongsTo('App\Convocazioni', 'id_convocazione', 'id');
     }
+
+    public function utenti_preferiti(){
+        return $this->belongsToMany('App\Utente', 'doc_preferiti', 'id_doc', 'id_utente');
+    }
 }

@@ -41,29 +41,63 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group mt-2 col-4">
+                                            <div class="form-group mt-2 col-2">
                                                 <label for="tipologia" class="col-md-6 col-form-label">{{ __('Tipologia Evento') }}</label>
 
                                                 <div class="col-md-12">
-                                                    <select id="tipologia" class="form-control">
+                                                    <select id="tipologia" name="tipologia" class="form-control">
 
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-2 col-4">
+                                            <div class="form-group mt-2 col-2">
                                                 <label for="data_inizio" class="col-md-6 col-form-label">{{ __('Data inizio') }}</label>
 
-                                                <div class="col-md-12">
-                                                    <input value="@if(strtotime($datainizio)>0){{$datainizio}}@else{{ old('data_inizio') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif id="data_inizio" type="datetime-local" class="form-control @error('data_inizio') is-invalid @enderror" name="data_inizio" value="{{ old('tdata_inizio') }}" required autofocus>
+                                                <div class="col-md-10">
+                                                    <input id="data_inizio" type="date" class="form-control @error('data_inizio') is-invalid @enderror" name="data_inizio" value="@if(strtotime($datainizio)>0){{$datainizio}}@else{{ old('data_inizio') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif required autofocus>
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-2 col-4">
+                                            <div class="form-group mt-2 col-1">
+                                                <label for="orainizio" class="col-md-6 col-form-label">{{ __('Ora') }}</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" id="orainizio" name="orainizio" class="form-control"
+                                                           min="00" max="23" value="{{$orainizio}}" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-2 col-1">
+                                                <label for="mininizio" class="col-md-6 col-form-label">{{ __('Min') }}</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" id="mininizio" name="mininizio" class="form-control"
+                                                           min="00" max="23" value="{{$mininizio}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-2 col-1">
+                                                &nbsp;
+                                            </div>
+                                            <div class="form-group mt-2 col-2">
                                                 <label for="data_fine" class="col-md-6 col-form-label">{{ __('Data fine') }}</label>
 
-                                                <div class="col-md-12">
-                                                    <input value="@if($datafine){{$datafine}}@else{{ old('data_fine') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif id="data_fine" type="datetime-local" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="{{ old('data_fine') }}" autofocus>
+                                                <div class="col-md-10">
+                                                    <input id="data_fine" type="date" class="form-control @error('data_fine') is-invalid @enderror" name="data_fine" value="@if($datafine){{$datafine}}@else{{ old('data_fine') }}@endif" @if(Auth::user()->ruolo == 'consigliere') disabled="disabled"@endif  autofocus>
                                                 </div>
                                             </div>
+                                            <div class="form-group mt-2 col-1">
+                                                <label for="orafine" class="col-md-6 col-form-label">{{ __('Ora') }}</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" id="orafine" name="orafine" class="form-control"
+                                                           min="00" max="23" value="{{$orafine}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-2 col-1">
+                                                <label for="minfine" class="col-md-6 col-form-label">{{ __('Min') }}</label>
+                                                <div class="col-md-12">
+                                                    <input type="number" id="minfine" name="minfine" class="form-control"
+                                                           min="00" max="23" value="{{$minfine}}">
+                                                </div>
+                                            </div>
+
+
+
                                         </div>
 
                                     </div>

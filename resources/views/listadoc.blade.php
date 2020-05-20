@@ -78,18 +78,18 @@
                             if(row['tags'].length > 0){
                                 let tags = '';
                                 row['tags'].forEach(function(item, index){
-                                        tags += '<button id="delTag" class="btn btn-sm btn-info"><i class="fa fa-close"></i>' + item['tag'] + "</button>" + " ";
+                                        if(item['tag'] != '') {
+                                            tags += '<button id="delTag" class="btn btn-sm btn-info"><i class="fa fa-close"></i>' + item['tag'] + "</button>" + " ";
+                                        }
                                     }
                                 );
-                                tags += '<button id="addTag" class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>';
                                 tags += '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
                                     '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
 
                                 return tags;
 
                             }else{
-                                return '<button style="display:inline; height:18px;" id="addTag" docid="' + row['id'] + '"  class="btn btn-sm btn-secondary"><i class="fa fa-plus"></i></button>' +
-                                    '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
+                                return '<div class="hidden" style="width:100px;" id="formtag"><input id="' + idInput + '" style="display:inline; height:18px; width:80px;" type="text" class="ml-3 form-control" aria-describedby="button-addon2">' +
                                     '<button style="display:inline; height:18px;" class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">Add Tag</button></div>';
                             }
 
@@ -101,8 +101,13 @@
                     {
                         "render": function ( data, type, row ) {
                             var btnclass = row['preferito'] == 1 ? 'btn-fill' : '';
-                            return "<button id='download' title='Scarica il Documento' class='btn btn-primary btn-fill'><i class='nc-icon nc-tap-01'></i></button>" +
+                            return "<button id='download' title='Scarica il Documento' class='btn btn-primary btn-fill'><i class='nc-icon nc-tap-01'></i></button>"
+                                @if(Auth::user()->ruolo == 'consigliere')
+                                +
                                 "<button id='addfav' title='Aggiungi ai preferiti' class='ml-4 btn btn-success " + btnclass + "'><i class='nc-icon nc-favourite-28'></i></button>"
+                                +
+                                "<button id='addTag' class='btn btn-secondary ml-4'><i class='fa fa-plus'></i></button>"
+                                @endif
                                 @if(Auth::user()->ruolo == 'amministratore')
                                 +
                                 "<button id='delete' title='Elimina il Documento' class='ml-4 btn btn-danger btn-fill'><i class='nc-icon nc-simple-remove'></i></button>"
@@ -130,10 +135,11 @@
             } );
 
             $('#table_id tbody').on( 'click', 'button#addTag', function () {
-                var sib = $(this).siblings('div#formtag');
+                var sib = $(this).parents('tr').find('div#formtag');
+
                 var data = table.row( $(this).parents('tr') ).data();
                 if(sib.hasClass('hidden')) {
-                    $(this).children('i').removeClass('fa-plus').addClass('fa-minus');
+
                     sib.removeClass('hidden').addClass('show');
                     sib.children('#inputTag'+data['id']).autocomplete({
                         serviceUrl: '{{route('listaTag')}}',
@@ -141,7 +147,7 @@
                     });
                 }else {
                     if(sib.hasClass('show')){
-                        $(this).children('i').removeClass('fa-minus').addClass('fa-plus');
+
                         sib.removeClass('show').addClass('hidden');
                     }
                 }
@@ -166,9 +172,11 @@
 
             $('#table_id tbody').on( 'click', 'button#delTag', function () {
                 var data = table.row( $(this).parents('tr') ).data();
+                var tag = $(this).text();
+                console.log(tag);
                 var conf = confirm("Eliminare il tag?");
                 if(conf){
-                    DeleteTag(data['id']);
+                    DeleteTag(data['id'], tag);
                     $(this).remove();
                 }
 
@@ -208,10 +216,12 @@
 
         }
 
-        function DeleteTag( id )
+        function DeleteTag( id, tag)
         {
-            var url = '{{ route('delTag', ':id') }}';
+            var url = '{{ route('delTag', [':id', ':tag']) }}';
             url = url.replace(':id', id);
+            url = url.replace(':tag', tag);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

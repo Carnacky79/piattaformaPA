@@ -6,6 +6,7 @@ use App\Documento;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -102,13 +103,14 @@ class TagController extends Controller
         $doc = Documento::find($id);
         $inTag = Tag::where('tag', '=', $tag)->first();
         if($inTag !== null){
-            $doc->tags()->attach($inTag->id);
+            $doc->tags()->attach($inTag->id, ['id_utente' =>Auth::id()]);
         }else{
             $Tag = new Tag;
             $Tag->tag = $tag;
             $Tag->save();
-            $doc->tags()->attach($Tag->id);
+            $doc->tags()->attach($Tag->id, ['id_utente' =>Auth::id()]);
         }
+
     }
 
     public function percTag($input = ''){

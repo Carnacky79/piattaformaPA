@@ -33,25 +33,27 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Lista Documenti") }}</p>
                 </a>
             </li>
+            @if(Auth::user()->ruolo == 'consigliere')
             <li class="nav-item @if($activePage == 'listadocpref') active @endif">
                 <a class="nav-link" href="{{route('listadocPref')}}">
                     <i class="nc-icon nc-favourite-28"></i>
                     <p>{{ __("Lista Documenti Pref") }}</p>
                 </a>
             </li>
+            @endif
             <li class="nav-item @if($activePage == 'listatipologie') active @endif">
                 <a class="nav-link" href="{{route('listaConvTip')}}">
                     <i class="nc-icon nc-chart-bar-32"></i>
                     <p>{{ __("Tipologia Convocazioni") }}</p>
                 </a>
             </li>
-           <li class="nav-item @if($activePage == 'listatag') active @endif">
+        <!--<li class="nav-item @if($activePage == 'listatag') active @endif">
                 <a class="nav-link" href="{{route('percTag')}}">
                     <i class="nc-icon nc-chart-bar-32"></i>
                     <p>{{ __("Lista Tags") }}</p>
                 </a>
             </li>
-            <!--<li class="nav-item @if($activePage == 'icons') active @endif">
+            <li class="nav-item @if($activePage == 'icons') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'icons')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Icons") }}</p>

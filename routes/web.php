@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/listadoc', 'DocumentoController@listaDoc')->name('listaDoc');
     Route::get('/listadocpref', 'DocumentoController@listaDocPref')->name('listadocPref');
     Route::delete('/deldoc/{doc}', 'DocumentoController@destroy')->name('delDoc');
-    Route::delete('/deltag/{doc}', 'DocumentoController@deltag')->name('delTag');
+    Route::delete('/deltag/{doc}/{tag}', 'DocumentoController@deltag')->name('delTag');
     Route::get('/addfav/{doc}', 'DocumentoController@addDocFav')->name('addDocFav');
 
     //ROTTE dei TAGS
