@@ -46,6 +46,23 @@
             </div>
         </div>
     </div>
+    <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="background-color: chocolate">
+            <div class="modal-content" style="background-color: chocolate; color: white; font-weight: bolder; text-align:center; padding: 50px; font-size: 2rem;">
+                @isset($success)
+                    {{$success}}
+                @endisset
+            </div>
+        </div>
+    </div>
+
+    <div id="delModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="background-color: chocolate">
+            <div class="modal-content" style="background-color: chocolate; color: white; font-weight: bolder; text-align:center; padding: 50px; font-size: 2rem;">
+                Record eliminato correttamente!
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')
@@ -53,7 +70,7 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         @isset($success)
-        $.notify({
+        /*$.notify({
             icon: "glyphicon glyphicon-warning-sign",
             message: "{{$success}}"
         },{
@@ -63,7 +80,8 @@
                 from: 'top',
                 align: 'right'
             }
-        });
+        });*/
+        $('#myModal').modal('show');
         @endisset
         var convocazioni = {!!$Convocazioni!!};
 
@@ -151,7 +169,7 @@
                 type: "get",
                 url: url,
                 success: function () {
-                    $.notify({
+                    /*$.notify({
                         icon: "glyphicon glyphicon-warning-sign",
                         message: "Record eliminato correttamente"
                     },{
@@ -161,8 +179,9 @@
                             from: 'top',
                             align: 'right'
                         }
-                    });
+                    });*/
 
+                    $('#delModal').modal('show');
                 },
             });
     }

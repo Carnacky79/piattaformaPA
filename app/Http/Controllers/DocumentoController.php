@@ -31,6 +31,9 @@ class DocumentoController extends Controller
 
     public function listaDoc(){
         $docs = Documento::with('tags')->get();
+        $docPref = Documento::with('tags')->whereHas('utenti_preferiti', function($query) {
+            $query->where('id_utente', '=', Auth::id());
+        })->get();
 
         $user = Utente::find(Auth::id());
 
@@ -38,6 +41,16 @@ class DocumentoController extends Controller
         $ruolo_utente_loggato = $user->ruolo;
 
         $tag_utente = $user->tags()->get();
+
+        $count = count($docs);
+        $countPref = count($docPref);
+
+        for($i = 0; $i < $count; $i++){
+            for($j = 0; $j < $countPref; $j++) {
+                if($docs[$i]['id'] == $docPref[$j]['id'])
+                    $docs[$i]['preferito'] = 1;
+            }
+        }
 
         foreach($docs as $key => &$doc){
             if(count($doc['tags']) > 0 && count($tag_utente) > 0){

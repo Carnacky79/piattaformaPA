@@ -104,13 +104,13 @@
                             return "<button id='download' title='Scarica il Documento' class='btn btn-primary btn-fill'><i class='nc-icon nc-tap-01'></i></button>"
                                 @if(Auth::user()->ruolo == 'consigliere')
                                 +
-                                "<button id='addfav' title='Aggiungi ai preferiti' class='ml-4 btn btn-success " + btnclass + "'><i class='nc-icon nc-favourite-28'></i></button>"
+                                "<button id='addfav' title='Aggiungi ai preferiti' class='ml-3 btn btn-success " + btnclass + "'><i class='nc-icon nc-favourite-28'></i></button>"
                                 +
-                                "<button id='addTag' class='btn btn-secondary ml-4'><i class='fa fa-plus'></i></button>"
+                                "<button id='addTag' class='btn btn-secondary ml-3'><i class='fa fa-plus'></i></button>"
                                 @endif
                                 @if(Auth::user()->ruolo == 'amministratore')
                                 +
-                                "<button id='delete' title='Elimina il Documento' class='ml-4 btn btn-danger btn-fill'><i class='nc-icon nc-simple-remove'></i></button>"
+                                "<button id='delete' title='Elimina il Documento' class='ml-3 btn btn-danger btn-fill'><i class='nc-icon nc-simple-remove'></i></button>"
                                 @endif;
                         },
                         "width": "15%",

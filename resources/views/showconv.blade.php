@@ -123,7 +123,7 @@
                                                             <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ $odg->descrizione_og }}"  autofocus>
                                                         </div>
                                                         <div class="form-group mt-2 col-3">
-                                                            <button onclick="delfromdbOrd(event, {{ $odg->id }})" id="eliminaordine" class="btn btn-danger btn-wd">{{ __('Elimina OdG') }}</button>
+                                                            <button onclick="delfromdbOrd(event, {{ $odg->id }})" id="eliminaordine" class="btn btn-danger btn-wd btn-fill">{{ __('Elimina OdG') }}</button>
                                                         </div>
                                                     @else
                                                         <div class="form-group mt-2 col-4">
@@ -153,7 +153,7 @@
                                                     <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
                                                 </div>
                                                 <div class="form-group mt-2 col-3">
-                                                    <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+                                                    <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd btn-fill">{{ __('Aggiungi') }}</button>
                                                 </div>
                                             </div>
                                         @endif
@@ -179,7 +179,7 @@
                                                         </div>
                                                         <div class="form-group mt-2 col-3">
                                                             @if(Auth::user()->ruolo == 'amministratore')
-                                                                <button onclick="delfromdbDoc(event, {{ $doc->id }})" id="eliminadocumento" class="btn btn-danger btn-wd">{{ __('Elimina Documento') }}</button>
+                                                                <button onclick="delfromdbDoc(event, {{ $doc->id }})" id="eliminadocumento" class="btn btn-danger btn-wd btn-fill">{{ __('Elimina Documento') }}</button>
                                                             @endif
                                                         </div>
 
@@ -196,7 +196,7 @@
                                                     &nbsp;
                                                 </div>
                                                 <div class="form-group mt-2 col-3">
-                                                    <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                                                    <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-info btn-wd btn-fill">{{ __('Aggiungi Documento') }}</button>
                                                 </div>
                                             </div>
                                         @endif
@@ -207,9 +207,9 @@
                                     @if(Auth::user()->ruolo == 'amministratore')
                                     <div class="container text-center mx-auto" style="max-width: 100%" >
                                         @if($titolo != '')
-                                            <button id="aggiorna" convid="{{$id}}" type="button" class="btn btn-warning btn-wd">{{ __('Aggiorna') }}</button>
+                                            <button id="aggiorna" convid="{{$id}}" type="button" class="btn btn-warning btn-wd btn-fill">{{ __('Aggiorna') }}</button>
                                         @else
-                                            <button type="submit" class="btn btn-warning btn-wd">{{ __('Salva') }}</button>
+                                            <button type="submit" class="btn btn-warning btn-wd btn-fill">{{ __('Salva') }}</button>
                                         @endif
 
                                     </div>
@@ -219,6 +219,13 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="background-color: chocolate">
+            <div class="modal-content" style="background-color: chocolate; color: white; font-weight: bolder; text-align:center; padding: 50px; font-size: 2rem;">
+                Record aggiornato correttamente!
             </div>
         </div>
     </div>
@@ -260,7 +267,7 @@
                 <input style="width:60%" id="desc_ordine" type="text" class="d-inline form-control " name="desc_ordine[]" value="{{ old('desc_ordine') }}"  autofocus>
             </div>
             <div class="form-group mt-2 col-3">
-                <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd">{{ __('Aggiungi') }}</button>
+                <button onclick="addOrder(event)" id="aggiungiordine" class="btn btn-success btn-wd btn-fill">{{ __('Aggiungi') }}</button>
             </div>
         </div>
         `;
@@ -278,10 +285,10 @@
                 <input style="width:60%" id="file" type="file" class="d-inline form-control " name="file[]" autofocus>
             </div>
             <div class="form-group mt-2 col-3">
-                <button onclick="delDoc(event)" id="eliminadocumento" class="btn btn-danger btn-wd">{{ __('Elimina Documento') }}</button>
+                <button onclick="delDoc(event)" id="eliminadocumento" class="btn btn-danger btn-wd btn-fill">{{ __('Elimina Documento') }}</button>
             </div>
             <div class="form-group mt-2 col-3">
-                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-info btn-wd btn-fill">{{ __('Aggiungi Documento') }}</button>
             </div>
         </div>
         `;
@@ -292,7 +299,7 @@
     function delDoc(event){
         const button =`
             <div class="form-group mt-2 col-3">
-                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-success btn-wd">{{ __('Aggiungi Documento') }}</button>
+                <button onclick="addDoc(event)" id="aggiungidocumento" class="btn btn-info btn-wd btn-fill">{{ __('Aggiungi Documento') }}</button>
             </div>
         `;
 
@@ -405,17 +412,18 @@
             cache: false,
             timeout: 30000,
             success: function (data) {
-                $.notify({
+                /*$.notify({
                     icon: "glyphicon glyphicon-warning-sign",
                     message: "Record aggiornato correttamente"
                 },{
                     type: 'success',
                     timer: 3000,
                     placement: {
-                        from: 'top',
-                        align: 'right'
+                        from: 'middle',
+                        align: 'center'
                     }
-                });
+                });*/
+                $('#myModal').modal('show');
                 $("#aggiorna").prop("disabled", false);
 
             },
