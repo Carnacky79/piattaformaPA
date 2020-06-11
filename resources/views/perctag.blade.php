@@ -119,7 +119,7 @@
 
             } );
         var ctx = document.getElementById('myChart');
-        var dati ={!! $data !!};
+        var dati = {!! $data !!};
 
         var options = {
                 "type":"polarArea",
@@ -210,8 +210,9 @@
             $('#table_id tbody').on( 'click', 'button#delTag', function () {
                 var data = table.row( $(this).parents('tr') ).data();
                 var conf = confirm("Eliminare il tag?");
+                var tag = $(this).text();
                 if(conf){
-                    DeleteTag(data['id']);
+                    DeleteTag(data['id'], tag);
                     $(this).remove();
                 }
 
@@ -251,10 +252,12 @@
 
         }
 
-        function DeleteTag( id )
+        function DeleteTag( id, tag)
         {
-            var url = '{{ route('delTag', ':id') }}';
+            var url = '{{ route('delTag', [':id', ':tag']) }}';
             url = url.replace(':id', id);
+            url = url.replace(':tag', tag);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

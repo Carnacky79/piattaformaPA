@@ -23,55 +23,15 @@ class DocumentoController extends Controller
         //
     }
 
-    private function tagNameByID($id){
-        $tags = Tag::find($id);
-
-        return $tags->tag;
-    }
-
     public function listaDoc(){
-        $docs = Documento::with('tags')->get();
-        $docPref = Documento::with('tags')->whereHas('utenti_preferiti', function($query) {
-            $query->where('id_utente', '=', Auth::id());
-        })->get();
-
         $user = Utente::find(Auth::id());
-
-        $id_utente_loggato = $user->id;
-        $ruolo_utente_loggato = $user->ruolo;
-
-        $tag_utente = $user->tags()->get();
-
-        $count = count($docs);
-        $countPref = count($docPref);
-
-        for($i = 0; $i < $count; $i++){
-            for($j = 0; $j < $countPref; $j++) {
-                if($docs[$i]['id'] == $docPref[$j]['id'])
-                    $docs[$i]['preferito'] = 1;
-            }
-        }
-
-        foreach($docs as $key => &$doc){
-            if(count($doc['tags']) > 0 && count($tag_utente) > 0){
-                foreach ($tag_utente as $k => $tag) {
-                    if (count($doc['tags']) > 0) {
-                        if ($doc['id'] == $tag['id_doc']) {
-                            $doc['tags'][$k]['tag'] = $this->tagNameByID($tag->id_tag);
-                        } else {
-                            $doc['tags'][$k]['tag'] = '';
-                        }
-                    }
-                }
-            }elseif(count($doc['tags']) > 0){
-                foreach($doc['tags'] as $j => $t){
-                    $t['tag'] = '';
-                }
-            }
-            //echo $key . ' - ' . $doc . '<br />';
-        }
-
-        //dd($tag_utente);
+        $docs = Documento::with(['tags' => function($query) use($user){
+            $query->wherePivot('id_utente', $user->id);
+        }, 'utenti_preferiti' => function($query) use($user){
+            $query->where('id_utente', $user->id);
+        }])->get()->each(function($documento) {
+            $documento->preferito = ($documento->utenti_preferiti->count() > 0);
+        });
 
         return view('listadoc',['Documenti' => $docs]);
 

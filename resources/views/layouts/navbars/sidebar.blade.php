@@ -47,13 +47,15 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Tipologia Convocazioni") }}</p>
                 </a>
             </li>
-        <!--<li class="nav-item @if($activePage == 'listatag') active @endif">
+            @if(Auth::user()->ruolo == 'consigliere')
+        <li class="nav-item @if($activePage == 'listatag') active @endif">
                 <a class="nav-link" href="{{route('percTag')}}">
                     <i class="nc-icon nc-chart-bar-32"></i>
                     <p>{{ __("Lista Tags") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
+            @endif
+{{--            <li class="nav-item @if($activePage == 'icons') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'icons')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Icons") }}</p>
@@ -70,7 +72,7 @@ Tip 2: you can also add an image using data-image tag
                     <i class="nc-icon nc-bell-55"></i>
                     <p>{{ __("Notifications") }}</p>
                 </a>
-            </li>-->
+            </li>--}}
 
         </ul>
     </div>

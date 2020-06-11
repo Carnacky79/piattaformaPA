@@ -35,10 +35,10 @@ class DocTag extends Pivot
      */
     public function tag()
     {
-        return $this->belongsTo('App\Tag', 'id', 'id_tag');
+        return $this->belongsTo('App\Tag', 'id_tag');
     }
 
     public function utente(){
-        return $this->belongsTo('App\Utente', 'id', 'id_utente');
+        return $this->belongsTo('App\Utente', 'id_utente');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DocTag;
 use App\Documento;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -114,34 +115,34 @@ class TagController extends Controller
     }
 
     public function percTag($input = ''){
+        $numeroDocumenti = [];
+        $tags = DocTag::where('id_utente', Auth::id())->with('tag')->get()->map(function($docTag) use(&$numeroDocumenti){
+            if (!isset($numeroDocumenti[$docTag->tag->tag])) {
+                $numeroDocumenti[$docTag->tag->tag] = 0;
+            }
+            $numeroDocumenti[$docTag->tag->tag] += 1;
+
+            return $docTag->tag;
+        })->unique(function($tag) {
+            return $tag->id;
+        });
+
         $documenti = Documento::with('tags')->whereHas('tags', function($query) use($input){
             $query->where('tag', 'like', $input);
         })->get();
 
-        $tags = Tag::All();
-        $docs = Documento::with(array('tags'=>function($query){
-            $query->select(DB::raw('tag'));
-        }))->get();
-        $doctag = [];
+        $data = [];
+        $data['labels'] = [];
+        $data['datasets']['data'] = [];
+        $data['datasets']['backgroundColor'] = [];
 
-        foreach($docs as $doc){
-            foreach($doc->tags as $tag) {
-                if(isset($doctag[$tag->tag])){
-                    $doctag[$tag->tag] += 1;
-                }else{
-                    $doctag[$tag->tag] = 1;
-                }
-            }
-        }
-
-        //dd($doctag);
-        foreach($tags as $key => $tag){
+        foreach($tags as $tag){
             $primo = random_int(0,255);
             $secondo = random_int(0,255);
             $terzo = random_int(0,255);
             $rgb = 'rgb('.$primo.','.$secondo.','.$terzo.')';
             $data['labels'][] = $tag['tag'];
-            $data['datasets']['data'][] = $doctag[$tag['tag']];
+            $data['datasets']['data'][] = $numeroDocumenti[$tag->tag];
             $data['datasets']['backgroundColor'][] = $rgb;
         }
 

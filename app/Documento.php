@@ -35,7 +35,7 @@ class Documento extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'doc_tags', 'id_doc', 'id_tag');
+        return $this->belongsToMany('App\Tag', 'doc_tags', 'id_doc', 'id_tag')->withPivot('id_utente')->as('utente');
     }
 
     /**
